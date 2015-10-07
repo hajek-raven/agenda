@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+{var ajax = $presenter->getParameter('ajax') == 'on'}
+{var $address = explode(":",$presenter->getName())}
+	<title>{if isset($title)}{$title}{else}Pokus 0.1{/if}</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="{$basePath}/css/defaults.css">
+	<link rel="stylesheet" href="{$basePath}/css/layout.css">
+	<link rel="stylesheet" href="{$basePath}/css/base.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<meta name="viewport" content="width=device-width">
+</head>
+
+<body class="{$address[1]|lower}">
+	<header id="site-header">
+	  <div class="container-vertical" id="site-heading">
+	    <div class="container-horizontal container-spread">
+	      <div id="site-title">{if isset($title)}{$title}{else}SPŠSE a VOŠ{/if}</div>
+	      <div class="icons">
+	        <span id="drawer-trigger" class="icon-button menu">Navigace</span>
+	        {if $user->isLoggedIn()}<a n:href=":Service:Sign:out" class="out icon-button">Odhlášení</a>{else}<a n:href=":Service:Sign:in" class="in icon-button">Přihlášení</a>{/if}
+	      </div>
+	    </div>
+			{ifset menu}
+	    <div id="local-menu" class="container-horizontal container-spread">
+	      {include menu}
+	    </div>
+			{/ifset}
+	  </div>
+	</header>
+	<div id="content-wrapper">
+		<div id="content"  class="limited-width">
+			<main>
+{ifset menu}
+			<header id="menu-context">
+{include menu}
+			</header>
+{/ifset}
+ <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+	{include content}
+			</main>
+		</div>
+	</div>
+	<div id="obfuscator"></div>
+	<div id="drawer">
+		{include '../../templates/globalNavigation.latte'}
+	</div>
+	{block scripts}
+	<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+	<script src="{$basePath}/js/main.js"></script>
+	{/block}
+	<footer id="site-footer">
+		{include '../../templates/globalFooter.latte'}
+	</footer>
+</body>
+</html>

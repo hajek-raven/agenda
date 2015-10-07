@@ -1,0 +1,65 @@
+{block content}
+<article class="card">
+	<header class="media top" style="background-image: url(../images/SPSSE_Liberec.jpg); color: white; background-position: top;">
+		<h1>Aktuální stav aplikace</h1>
+	</header>
+	<div class="text">
+	<p>Tato stránka shrnuje aktuální stav implementace očekávaných funkcí aplikace.</p>
+	<p>Aplikace je určena jako náhrada starého systému pro správu DMP, který přestal fungovat během prázdnin 2014/2015 a který byl i předtím pomalu zastarávající.</p>
+  </div>
+	<footer class="article-info">
+		<div class="user-data">
+			<a class="user-avatar" href="#"><img class="avatar" src="{$basePath}/images/avatar.png"/></a>
+			<div class="user-options">
+				<a class="user-name" href="#">Michal Stehlík</a>
+				<span class="published">15.9.2015</a>
+			</div>
+		</div>
+	</footer>
+</article>
+<article class="card">
+	<header>
+		<h1>Funkční části</h1>
+	</header>
+	<div class="text">
+		<h1>Jádro aplikace</h1>
+	  <ul>
+			<li>Přihlašování a registrace uživatelů přes lokální účty</li>
+			<li>Obnovení zapomenutého hesla</li>
+		</ul>
+		<h1>Dlouhodobé práce</h1>
+	  <ul>
+			<li>Vytváření a správa zadání</li>
+			<li>Vytváření a správa prací</li>
+		</ul>
+  </div>
+</article>
+<article class="card">
+	<header>
+		<h1>Neimplementované části</h1>
+	</header>
+	<div class="text">
+		<h1>Jádro aplikace</h1>
+	  <ul>
+			<li>Přihlašování a registrace uživatelů přes školní účty</li>
+			<li>Přihlašování a registrace uživatelů přes účty třetích stran</li>
+			<li>Navázání aplikace na systém Bakaláří (v tomto okamžiku nelze zjistit, který student je z jaké třídy, všechny účty a skupiny je nutné nastavovat ručně)</li>
+			<li>Import uživatelů</li>
+		</ul>
+		<h1>Dlouhodobé práce</h1>
+	  <ul>
+			<li>Vytváření šablon pro hodnocení prací</li>
+			<li>Mazání cílů zadání a bodů osnov</li>
+			<li>Změna pořadí cílů zadání a bodů osnov</li>
+			<li>Tisk přihlášek</li>
+			<li>Hodnocení prací</li>
+			<li>Tisk hodnocení</li>
+			<li>Archiv prací (naimportování dat z předchozího systému - zatím jen zadání a základ prací)</li>
+		</ul>
+  </div>
+</article>
+{/block}
+
+{block scripts}
+{include parent}
+{/block}

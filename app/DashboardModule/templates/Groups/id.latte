@@ -1,0 +1,40 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<h1>Obecné údaje</h1>
+<dl>
+	<dt>Název</dt>
+	<dd>{$data->name}</dd>
+	<dt>Identifikátor</dt>
+	<dd>{$data->role_name}</dd>
+	<dt>Vnitřní ID</dt>
+	<dd>{$data->id}</dd>
+	<dt>Správce</dt>
+	<dd>{$data->firstname} {$data->lastname}</dd>
+</dl>
+</section>
+<section class="card normal-card">
+<h1>Přístupnost</h1>
+<dl>
+	<dt>Aktivní</dt>
+	<dd>{if $data->active}Ano{else}Ne{/if}</dd>
+	<dt>Otevřená (kdokoli se do ní může přihlásit i odhlásit)</dt>
+	<dd>{if $data->open}Ano{else}Ne{/if}</dd>
+	<dt>Veřejná</dt>
+	<dd>{if $data->visible_all}Ano{else}Ne{/if}</dd>
+	<dt>Zobrazitelná členy</dt>
+	<dd>{if $data->visible_members}Ano{else}Ne{/if}</dd>
+	<dt>Veřejný seznam členů</dt>
+	<dd>{if $data->list_all}Ano{else}Ne{/if}</dd>
+	<dt>Privátní seznam členů</dt>
+	<dd>{if $data->list_members}Ano{else}Ne{/if}</dd>
+</dl>
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+	{if ($editable)}<a class="edit icon-button" n:href="edit, $data->id" role="button">Editace</a>{/if}
+</nav>
+{/block}

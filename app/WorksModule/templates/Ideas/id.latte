@@ -1,0 +1,113 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<div>
+	<header>
+		<h1>Popis námětu</h1>
+	</header>
+<dl>
+	<dt>Název</dt>
+	<dd>{$idea->name}</dd>
+	<dt>Téma</dt>
+	<dd>{$idea->description}</dd>
+	<dt>Vyučovací předmět</dt>
+	<dd>{$idea->subject}</dd>
+	<dt>Prostředky</dt>
+	<dd>{$idea->resources}</dd>
+	<dt>Autor</dt>
+	<dd>{$idea->lastname}, {$idea->firstname}</dd>
+	<dt>Aktivní (lze na něm založit práci)</dt>
+	<dd>{if ($idea->active)}Ano{else}Ne{/if}</dd>
+</dl>
+</div>
+</section>
+<section class="card normal-card">
+<div>
+<header>
+<h1>Cíle</h1>
+</header>
+<p>Cíle popisují vše, co v práci v době jejího odevzdání má být hotovo a odevzdáno.</p>
+{snippet goalList}
+{if $goals}
+<table class="table">
+{foreach $goals as $g}
+<tr><td>{$g->order}</td><td>{$g->description}</td>
+{if $editable}
+ <td>
+  <a n:href="deleteGoal! $idea->id, 'order' => $g->order" class="ajax delete icon-button">Odstranit</a>
+	{if !$iterator->isFirst()}<a n:href="upGoal! $idea->id, 'order' => $g->order" class="ajax up icon-button">Nahoru</a>{/if}
+	{if !$iterator->isLast()}<a n:href="downGoal! $idea->id, 'order' => $g->order" class="ajax down icon-button">Dolu</a>{/if}
+	</td>
+ {/if}
+</tr>
+{/foreach}
+</table>
+{else}
+	<p>Seznam je prázdný.</p>
+{/if}
+{/snippet}
+</div>
+{if $editable}
+<footer class="inline-form-inside">
+	{snippet goalForm}
+	<form n:name=newGoalForm class="form form-inline">
+	 <input n:name=description class="form-control fill-width">
+	 <div class="icons">
+	  <input class="ajax new icon-button" type=submit n:name=send>
+	  <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button">Obnovit</a>
+	 </div>
+	</form>
+	{/snippet}
+</footer>
+{/if}
+</section>
+<section class="card normal-card">
+<div>
+	<header>
+<h1>Osnova</h1>
+</header>
+<p>Osnova shrnuje veškeré kroky, které student bude muset učinit, aby dosáhl cílů práce: co bude muset nastudovat, vyrobit, promyslet.</p>
+{snippet outlineList}
+{if $outline}
+<table class="table">
+{foreach $outline as $o}
+<tr><td>{$o->order}</td><td>{$o->description}</td>
+{if $editable}
+<td>
+ <a n:href="deleteOutline! $idea->id, 'order' => $o->order" class="ajax delete icon-button">Odstranit</a>
+ {if !$iterator->isFirst()}<a n:href="upOutline! $idea->id, 'order' => $o->order" class="ajax up icon-button">Nahoru</a>{/if}
+ {if !$iterator->isLast()}<a n:href="downOutline! $idea->id, 'order' => $o->order" class="ajax down icon-button">Dolu</a>{/if}
+ </td>
+{/if}
+</tr>
+{/foreach}
+</table>
+{else}
+	<p>Seznam je prázdný.</p>
+{/if}
+{/snippet}
+</div>
+{if $editable}
+<footer class="inline-form-inside">
+	{snippet outlineForm}
+	<form n:name=newOutlineForm class="form form-inline">
+	<input n:name=description class="fill-width form-control">
+	<div class="icons">
+	 <input class="ajax new icon-button" type=submit n:name=send>
+	 <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button">Obnovit</a>
+	</div>
+	</form>
+	{/snippet}
+</footer>
+{/if}
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+	{if $editable}
+	<a n:href="edit $idea->id" class="edit icon-button">Editace</a>
+	{/if}
+</nav>
+{/block}

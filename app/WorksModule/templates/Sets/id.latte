@@ -1,0 +1,21 @@
+{block content}
+<div class="data-cards">
+<section>
+<h1>Obecné údaje</h1>
+<dl>
+	<dt>Název</dt>
+	<dd>{$data->name}</dd>
+	<dt>Šablona</dt>
+	<dd>{$data->template}.latte</dd>
+	<dt>Aktivní</dt>
+	<dd>{if $data->active}Ano{else}Ne{/if}</dd>
+	<dt>Nejvyšší známka</dt>
+	<dd>{$data->max_grade}</dd>
+</dl>
+</section>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+</nav>
+{/block}

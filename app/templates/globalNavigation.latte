@@ -1,0 +1,8 @@
+<div id="global-navigation">
+  <nav>
+    <header>Moduly</header>
+    <a n:href=":Front:Homepage:default" class="home">Titulní stránka</a>
+    {if ($user->isAllowed("Dashboard:Homepage",'default'))}<a n:href=":Dashboard:Homepage:default" class="dashboard">Dashboard</a>{/if}
+    {if ($user->isAllowed("Works:Homepage",'default'))}<a n:href=":Works:Homepage:default" class="graduate">Dlouhodobé práce</a>{/if}
+  </nav>
+</div>

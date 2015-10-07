@@ -1,0 +1,48 @@
+{block content}
+<div class="menu-cards">
+{if ($user->isAllowed("Dashboard:Users",'default'))}
+<div class="card normal-card">
+ <a n:href="Users:default">
+  <div class="big-icon user">&nbsp;</div>
+  <div class="big-number">??</div>
+ </a>
+  <footer>
+  <div class="area-description">Uživatelé</div>
+  <div><a n:href="Users:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+{if ($user->isAllowed("Dashboard:Groups",'default'))}
+<div class="card normal-card">
+ <a n:href="Groups:default">
+  <div class="big-icon group">&nbsp;</div>
+  <div class="big-number">??</div>
+</a>
+  <footer>
+  <div class="area-description">Skupiny</div>
+  <div><a n:href="Groups:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+{if ($user->isAllowed("Dashboard:Files",'default'))}
+<div class="card normal-card">
+ <a n:href="Files:default">
+  <div class="big-icon file">&nbsp;</div>
+  <div class="big-number">??</div>
+  </a>
+  <footer>
+  <div class="area-description">Soubory</div>
+  <div><a n:href="Files:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="home icon-button" n:href=":Front:Homepage:default">Zpět</a>
+</nav>
+{/block}
+{block scripts}
+{include parent}
+{/block}

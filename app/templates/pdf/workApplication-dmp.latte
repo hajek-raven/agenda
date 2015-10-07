@@ -1,0 +1,100 @@
+{include "organisationHeader.latte"}
+<header id="document-title">
+  <h1>Přihláška k dlouhodobé maturitní práci</h1>
+</header>
+<section>
+<table>
+ <tr><th>Jméno a příjmení studenta</th><th>Třída</th></tr>
+ <tr><td>{$work->firstname} {$work->lastname}</td><td>{$work->class}</td></tr>
+ <tr><th>Název práce</th><th>Školní rok</th></tr>
+ <tr><td>{$work->name}</td><td>{$work->year}/{$work->year + 1}</td></tr>
+ <tr><th colspan=2>Navazující práce (Jméno a třída studenta)</th></tr>
+ <tr><td colspan=2 class="signature">&nbsp;</td></tr>
+ {if ($work->consultant)}
+ <tr><th colspan=2>Konzultanti (Jméno a instituce)</th></tr>
+ <tr><td colspan=2>{$work->consultant}</td></tr>
+ {/if}
+</table>
+</section>
+{if $roles}
+{var $equalWidth = 100 / count($roles)}
+<h2>Přídělené role</h2>
+<table>
+<tr>
+{foreach $roles as $role}
+<th class="" width="{$equalWidth}%">{$role["name"]}</th>
+{/foreach}
+</tr>
+<tr>
+{foreach $roles as $role}
+<td class="signature">Podpis(y)</td>
+{/foreach}
+</tr>
+<tr>
+{foreach $roles as $role}
+<td class="center">
+{foreach $role["evaluators"] as $evaluator}
+{$evaluator["firstname"]} {$evaluator["lastname"]}
+{sep}<br />{/sep}
+{/foreach}
+</td>
+{/foreach}
+</tr>
+</table>
+{else}
+<p>Sada neobsahuje žádné role k tisku.</p>
+{/if}
+ <table class="table no-bold">
+ <tr><th rowspan="4" style="width: 15%;" class="center">Obecná ustanovení</th>
+ <td>Vypracování a odevzdání práce proběhne v souladu s platnými normami (vyhláška 177/2009) a aktuálním dokumentem "Pokyny pro zpracování DMP" vydaným školou.</td></tr>
+ <tr><td>Práce bude hodnocena z hlediska jejího praktického využití, zvládnutí dokumentace po věcné i formální stránce a obhajoby celé práce.</td></tr>
+ <tr><td>Práce bude odevzdána ve dvou stejnopisech vázaných pevnou nebo kroužkovou vazbou.</td></tr>
+ <tr><td>Veškeré náklady na DMP včetně vyhotovení obou tištěných kopií si student hradí sám.</td></tr>
+ <tr><th rowspan="4" style="width: 15%;" class="center">Licenční ujednání</th>
+ <td>Ve smyslu §60 autorského zákona č. 121/2000 Sb. poskytuji SPŠ SE a VOŠ Liberec výhradní a neomezená práva (§46 a §47) k využití této mé dlouhodobé práce.</td></tr>
+ <tr><td>Bez svolení školy se zdržím jakéhokoliv komerčního využití mé práce.</td></tr>
+ <tr><td>V případě komerčního využití práce školou obdrží žák - autor práce (autorský kolektiv) odměnu ve výši jedné třetiny dosaženého zisku.</td></tr>
+ <tr><td>Pro výukové účely a prezentaci školy se vzdávám nároku na odměnu za užití díla.</td></tr>
+ </table>
+ <table class="borderless">
+ <tr><th>Podpis studenta (vyjadřuje souhlas s uvedenými údaji a ujednáními)</th></tr>
+ <tr class="bottom"><td style="width: 50%; text-align:left;">V Liberci dne {$date|date:'%d.%m.%Y'}</td><td class="signature">Podpis</td></tr>
+ <tr><th colspan=2>Stanovisko třídního učitele</th></tr>
+ <tr class="bottom"><td style="width: 50%; text-align:left;">Práci doporučuji</td><td class="signature">Podpis</td></tr>
+ <tr><th colspan=2>Stanovisko předmětové komise</th></tr>
+ <tr class="bottom"><td style="width: 50%; text-align:left;">Práci doporučuji</td><td class="signature">Podpis</td></tr>
+ <tr><th colspan=2>Souhlas ředitele školy</th></tr>
+ <tr class="bottom"><td style="width: 50%; text-align:left;">Práci schvaluji</td><td class="signature">Podpis</td></tr>
+ </table>
+<pagebreak />
+<header id="document-title">
+  <h1>Zadání dlouhodobé maturitní práce</h1>
+</header>
+<table>
+ <tr><th>Název</th><th>Předmět</th></tr>
+ <tr><td>{$assignment->name}</td><td>{$assignment->subject}</td></tr>
+ <tr><th colspan=2>Téma</th></tr>
+ <tr><td colspan=2>{$assignment->description}</td></tr>
+ <tr><th colspan=2>Použité prostředky</th></tr>
+ <tr><td colspan=2>{$assignment->resources}</td></tr>
+</table>
+<h2>Cíle práce</h2>
+<table class="table no-bold">
+{if $goals}
+{foreach $goals as $goal}
+<tr><td width="30px" class="center">{$goal->order}</td><td>{$goal->description}</td></tr>
+{/foreach}
+{else}
+<tr><td>Práce nemá stanovené žádné cíle.</td></tr>
+{/if}
+</table>
+<h2>Osnova práce</h2>
+<table class="table no-bold">
+{if $outline}
+{foreach $outline as $line}
+<tr><td width="30px" class="center">{$line->order}</td><td>{$line->description}</td></tr>
+{/foreach}
+{else}
+<tr><td>Práce nemá stanovené žádné body osnovy.</td></tr>
+{/if}
+</table>

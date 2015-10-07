@@ -1,0 +1,45 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<header>
+<h1>Soubor</h1>
+</header>
+<dl>
+	<dt>Název</dt>
+	<dd>{$data->original}</dd>
+	<dt>Koncovka</dt>
+	<dd>{$data->extension}</dd>
+	<dt><a href="https://cs.wikipedia.org/wiki/Multipurpose_Internet_Mail_Extensions">MIME</a></dt>
+	<dd>{$data->mime}</dd>
+	<dt>Fyzické umístění</dt>
+	<dd>{$location} {if !$exists} <em>Soubor reálně neexistuje!</em>{/if}</dd>
+	<dt>Velikost</dt>
+	<dd>{$data->size} B</dd>
+	<dt>Vlastník</dt>
+	<dd>{$data->lastname}, {$data->firstname}</dd>
+	<dt>Datum a čas uložení</dt>
+	<dd>{$data->uploaded|date:'%d.%m.%Y %H:%M:%S'}</dd>
+	<dt>Přístupnost</dt>
+	<dd>{if $data->public}Veřejně přístupný{else}Nepřístupný{/if}</dd>
+	<dt>Zámek</dt>
+	<dd>{if $data->locked}Se souborem není možné manipulovat.{else}Se souborem lze manipulovat.{/if}</dd>
+</dl>
+<footer>
+	<div class="icons">
+{if ($user->isInRole("administrator") || $user->id == $data->user_id || $data->public)}
+	  <a n:href="download $data->id" class="download icon-button">Uložení</a>
+		<a n:href="refreshFileData $data->id" class="refresh icon-button">Aktualizovat data ze souboru</a>
+{/if}
+{if ($user->isInRole("administrator") || (($data->locked == 0) && $user->id == $data->user_id))}
+		<a n:href="edit $data->id" class="edit icon-button">Editace</a>
+{/if}
+</div>
+</footer>
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+</nav>
+{/block}

@@ -1,0 +1,24 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<header>
+<h1>Osobní údaje</h1>
+</header>
+<dl>
+	<dt>Jméno a příjmení</dt>
+	<dd>{$data->firstname} {$data->lastname}</dd>
+	<dt>Pohlaví</dt>
+	<dd>{if ($data->gender == "M")}Muž{else}Žena{/if}</dd>
+	<dt>Datum narození</dt>
+	<dd>{$data->birthdate|date:'%d.%m.%Y'}</dd>
+</dl>
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+	{if ($user->isAllowed("Dashboard:Users",'edit'))}<a class="edit icon-button" n:href="edit, $data->id" role="button">Editace</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'password'))}<a class="password icon-button" n:href="password, $data->id" role="button">Nastavení lokálního hesla</a>{/if}
+</nav>
+{/block}

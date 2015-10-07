@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="69.549545"
+   height="71.11409"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.47 r22583"
+   sodipodi:docname="refresh.svg">
+  <defs
+     id="defs4">
+    <marker
+       inkscape:stockid="TriangleOutS"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="TriangleOutS"
+       style="overflow:visible">
+      <path
+         id="p1"
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="scale(0.2,0.2)" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="l1"
+     transform="translate(-296.93217,-257.86627)">
+    <path
+       sodipodi:type="arc"
+       style="fill:none;stroke:#000000;stroke-width:50.51187134;stroke-miterlimit:4;stroke-opacity:1;marker-end:url(#TriangleOutS)"
+       id="p3"
+       sodipodi:cx="454.28571"
+       sodipodi:cy="412.36218"
+       sodipodi:rx="151.42857"
+       sodipodi:ry="148.57143"
+       d="M 592.3858,473.31077 A 151.42857,148.57143 0 1 1 573.88692,321.23745"
+       sodipodi:start="0.42270719"
+       sodipodi:end="5.6229034"
+       sodipodi:open="true"
+       transform="matrix(0.2045106,0,0,0.2045106,240.16743,209.09088)" />
+  </g>
+</svg>

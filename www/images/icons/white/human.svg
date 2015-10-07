@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   width="512px"
+   height="512px"
+   viewBox="0 0 512 512"
+   enable-background="new 0 0 512 512"
+   xml:space="preserve"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="human.svg"><metadata
+   id="metadata23"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs21">
+	
+	
+	
+	
+	
+</defs><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="640"
+   inkscape:window-height="480"
+   id="namedview19"
+   showgrid="false"
+   inkscape:zoom="0.4609375"
+   inkscape:cx="256"
+   inkscape:cy="256"
+   inkscape:window-x="979"
+   inkscape:window-y="294"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="Layer_1" />
+<path
+   inkscape:connector-curvature="0"
+   id="path11"
+   d="m 462.93622,456.63896 c 0,-96.29499 -39.01875,-180.71286 -97.58792,-227.96128 -25.75293,31.88711 -64.688,52.21161 -108.26204,52.21161 -43.57401,0 -82.51214,-20.3245 -108.26354,-52.21161 -58.569177,47.24842 -97.589451,131.66629 -97.589451,227.96128 0,0 84.428571,31.0729 203.954831,31.0729 119.52628,0 207.74812,-31.0729 207.74812,-31.0729 z"
+   style="fill:#ffffff" /><circle
+   sodipodi:ry="74.844002"
+   sodipodi:rx="74.844002"
+   sodipodi:cy="227.84399"
+   sodipodi:cx="256.00101"
+   id="circle13"
+   r="74.844002"
+   cy="227.84399"
+   cx="256.00101"
+   transform="matrix(1.5209613,0,0,1.5568362,-132.28137,-217.53492)"
+   style="fill:#ffffff" />
+</svg>

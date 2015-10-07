@@ -1,0 +1,179 @@
+/* Usual settings */
+
+hr {
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
+	margin: 1em 0;
+	padding: 0;
+}
+
+audio, canvas, img, svg, video {
+	vertical-align: middle;
+}
+
+fieldset {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+
+textarea {
+	resize: vertical;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin: 0;
+	padding: 0;
+}
+
+main {
+	display: block;
+}
+
+*[hidden] {
+	display: none !important;
+}
+
+/* Helper classes */
+
+.hidden {
+	display: none !important;
+	visibility: hidden;
+}
+.visible {
+	visibility: visible;
+}
+.visuallyhidden {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
+	clip: auto;
+	height: auto;
+	margin: 0;
+	overflow: visible;
+	position: static;
+	width: auto;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+.clearfix:before, .clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+/* Typography */
+
+html {
+	font-size: 12pt;
+	font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	letter-spacing: -0.02em;
+	font-weight: 400;
+}
+
+h2, h3 {
+	margin-top: 2rem;
+	margin-bottom: 0.2em;
+	font-weight: 100;
+}
+
+h1 {
+	font-weight: 100;
+	font-size: 2rem;
+	line-height: 1.35;
+}
+
+h2 {
+	font-size: 1.5rem;
+	line-height: 1;
+}
+
+h3 {
+	font-size: 1.2rem;
+	line-height: 1;
+}
+
+h4 {
+	font-size: 1rem;
+  	line-height: 1;
+  	margin-bottom: 1rem;
+}
+
+h5 {
+  	font-size: 1rem;
+  	font-weight: 500;
+  	line-height: 1;
+  	letter-spacing: 0.02em;
+  	margin-bottom: 1rem;
+}
+
+h6 {
+  	font-size: 1rem;
+  	line-height: 2rem;
+  	letter-spacing: 0.04em;
+  	margin-bottom: 1rem; }
+
+p {
+  	font-size: 1rem;
+  	font-weight: 400;
+  	line-height: 1.5;
+  	letter-spacing: 0;
+  	margin-bottom: 1rem;
+  	text-align: justify;
+}
+
+blockquote {
+  	position: relative;
+  	font-size: 1.5rem;
+  	font-weight: 300;
+  	font-style: italic;
+  	line-height: 1.35;
+  	letter-spacing: 0.08em;
+}
+
+blockquote:before {
+    position: absolute;
+    left: -0.5em;
+    content: '“';
+}
+blockquote:after {
+    content: '”';
+    margin-left: -0.05em;
+}
+
+mark {
+  	/*background-color: #f4ff81;*/
+}
+
+dt {
+  	font-weight: 700;
+}
+
+address {
+  	font-weight: 400;
+  	line-height: 1;
+  	letter-spacing: 0;
+  	font-style: normal;
+}
+ul, ol {
+  letter-spacing: 0;
+}

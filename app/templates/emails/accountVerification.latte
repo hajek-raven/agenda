@@ -1,0 +1,14 @@
+{layout "mailLayout.latte"}
+{block content}
+            <tr>
+                <td>
+                    <p>{if $gender == "M"}Milý uživateli{else}Milá uživatelko{/if},</p>
+                    <p>{if $gender == "M"}požádal{else}požádala{/if} jste si o registraci na našem serveru. K jejímu dokončení již zbývá jediná věc - potvrdit správnost Vaši emailové edresy. To uděláte na adrese <a href="{link //verification}">{link //verification}</a>.</p>
+                    <table border="1" cellpadding="10px" cellspacing="0" width="100%">
+                        <tr><th>Jméno a příjmení</th><td>{$firstname} {$lastname}</td></tr>
+                        <tr><th>Přihlašovací jméno</th><td>{$username}</td></tr>
+                        <tr><th>Ověřovací kód</th><td><a href="{link //verification $username,  $verificationToken}">{$verificationToken}</a></td></tr>
+                    </table>
+                </td>
+            </tr>
+{/block}

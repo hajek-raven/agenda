@@ -1,0 +1,11 @@
+{block content}
+<div class="card normal-card">
+	{control grid}
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="Homepage:default">Zpět</a>
+	{if $user->isAllowed("Works:Assignments",'add')}<a class="new icon-button" n:href="add" role="button">Nové</a>{/if}
+</nav>
+{/block}

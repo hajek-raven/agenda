@@ -1,0 +1,15 @@
+{block content}
+<div class="card normal-card">
+	<header>
+		<h1 n:block=title>Přihlášení</h1>
+	</header>
+{control signInForm}
+	<footer>
+	 <div>
+		<a n:href="Sign:up" class="btn btn-default">Registrace</a>
+		<a n:href="Sign:password" class="btn btn-default">Obnovení hesla</a>
+	 </div>	
+	</footer>
+</div>
+
+{* or use {include '../components/form.latte', form => signInForm} *}

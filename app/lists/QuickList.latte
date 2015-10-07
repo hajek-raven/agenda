@@ -1,0 +1,19 @@
+<div>
+{foreach $flashes as $flash}
+    <div class="alert alert-{$flash->type}">{$flash->message}</div>
+{/foreach}
+{if $data}
+<table class="table">
+{foreach $data as $index => $item}
+  <tr><td>{$item}</td></tr>
+{/foreach}
+</table>
+{else}
+<p class="alert alert-info">Seznam je prázdný.</p>
+{/if}
+{if ($editable == true)}
+<footer>
+ <a href="{link refresh}" class="refresh icon-button">Obnovení</a>
+</footer>
+{/if}
+</div>

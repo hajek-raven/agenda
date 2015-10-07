@@ -1,0 +1,61 @@
+{block content}
+<article class="card">
+	<header class="media" style="background-image: url(../images/bg2.jpg); color: white;">
+		<h1>Test content</h1>
+	</header>
+	<div class="text">
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio a tortor pulvinar elementum eu et nisl. Cras nec quam sit amet erat congue volutpat. Duis id gravida sem, sit amet tempor dui. Nunc egestas vulputate diam. Vivamus ac congue magna. Vivamus quis aliquam arcu, id condimentum neque. Vivamus hendrerit diam sed pulvinar finibus. Nunc tempus nec nisl et maximus.</p>
+  <h1>Nadpis</h1>
+	<p>Quisque quis felis nec <a href="#">dui pharetra pellentesque</a> et non leo. Morbi pellentesque mattis mauris vel luctus. Integer eleifend felis ipsum, vel tristique dui aliquet sed. Suspendisse tristique augue nisl, nec pretium ex eleifend sed. Nulla sed blandit tellus, sed bibendum sapien. Vestibulum quis ante et tortor mattis aliquet. Quisque turpis felis, fringilla sit amet pellentesque ut, elementum id magna. Duis sit amet leo eget velit imperdiet malesuada vulputate vel tellus. Nunc bibendum interdum accumsan. Vivamus sed leo vitae libero ultrices dictum fringilla ut odio. Pellentesque ac ante lacinia magna viverra convallis. Praesent ut ipsum mauris. Cras justo lorem, interdum in ipsum id, ullamcorper convallis elit. Donec rutrum hendrerit rhoncus. Vestibulum porttitor, dui ut scelerisque tincidunt, lectus magna ornare tellus, non malesuada nulla arcu sit amet urna. Duis consectetur nibh ipsum, ac dignissim nisl pulvinar vitae.</p>
+	</div>
+	<div class="media" style="background-image: url(../images/bg3.jpg); color: white;">
+		<h1>Another test content</h1>
+		<p>Because testing is nessessary.</p>
+	</div>
+	<div class="text">
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio a tortor pulvinar elementum eu et nisl. Cras nec quam sit amet erat congue volutpat. Duis id gravida sem, sit amet tempor dui. Nunc egestas vulputate diam. Vivamus ac congue magna. Vivamus quis aliquam arcu, id condimentum neque. Vivamus hendrerit diam sed pulvinar finibus. Nunc tempus nec nisl et maximus.</p>
+
+	<p>Quisque quis felis nec dui pharetra pellentesque et non leo. Morbi pellentesque mattis mauris vel luctus. Integer eleifend felis ipsum, vel tristique dui aliquet sed. Suspendisse tristique augue nisl, nec pretium ex eleifend sed. Nulla sed blandit tellus, sed bibendum sapien. Vestibulum quis ante et tortor mattis aliquet. Quisque turpis felis, fringilla sit amet pellentesque ut, elementum id magna. Duis sit amet leo eget velit imperdiet malesuada vulputate vel tellus. Nunc bibendum interdum accumsan. Vivamus sed leo vitae libero ultrices dictum fringilla ut odio. Pellentesque ac ante lacinia magna viverra convallis. Praesent ut ipsum mauris. Cras justo lorem, interdum in ipsum id, ullamcorper convallis elit. Donec rutrum hendrerit rhoncus. Vestibulum porttitor, dui ut scelerisque tincidunt, lectus magna ornare tellus, non malesuada nulla arcu sit amet urna. Duis consectetur nibh ipsum, ac dignissim nisl pulvinar vitae.</p>
+	</div>
+	<div class="gallery picture-gallery">
+		<figure class="picture">
+			<img src="../images/thumb/1.jpg" alt="1" />
+		</figure>
+		<figure class="picture">
+			<img src="../images/thumb/2.jpg" alt="2" />
+		</figure>
+		<figure class="picture">
+			<img src="../images/thumb/3.jpg" alt="3" />
+		</figure>
+	</div>
+	<div class="gallery picture-gallery">
+		<table class="table">
+			<thead>
+				<tr><th>A</th><td>B</td><td>C</td></tr>
+			</thead>
+			<tbody>
+				<tr><th>1</th><td>2</td><td>3</td></tr>
+				<tr><th>1</th><td>2</td><td>3</td></tr>
+				<tr><th>1</th><td>2</td><td>3</td></tr>
+				<tr><th>1</th><td>2</td><td>3</td></tr>
+			</tbody>
+		</table>
+	</div>
+	<footer class="article-info">
+		<div class="user-data">
+			<a class="user-avatar" href="#"><img class="avatar" src="{$basePath}/images/avatar.png"/></a>
+			<div class="user-options">
+				<a class="user-name" href="#">Michal Stehlík</a>
+				<span class="published">15.7.2015</a>
+			</div>
+		</div>
+		<div class="icons">
+			<a n:href="Article:default" class="id icon-button">Podrobnosti</a>
+		</div>
+	</footer>
+</article>
+{/block}
+
+{block scripts}
+{include parent}
+{/block}

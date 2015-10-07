@@ -1,0 +1,31 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<header>
+<h1>Základní údaje</h1>
+</header>
+<dl>
+	<dt>Název</dt>
+	<dd>{$work->name}</dd>
+	<dt>Autor</dt>
+	<dd>{$work->lastname}, {$work->firstname}</dd>
+	<dt>Třída</dt>
+	<dd>{$work->class}</dd>
+	<dt>Školní rok</dt>
+	<dd>{$work->year}</dd>
+	<dt>Stav</dt>
+	<dd>{$statuses[$work->status]}</dd>
+	<dt>Vytvořil</dt>
+	<dd>{$maker->lastname}, {$maker->firstname}</dd>
+	<dt>Vytvořeno­</dt>
+  <dd>{$work->created_date|date:'%d.%m.%Y'}</dd>
+</dl>
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+	{if $editable}<a n:href="edit $work->id" class="edit icon-button">Editace</a>{/if}
+</nav>
+{/block}
