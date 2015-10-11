@@ -1,6 +1,7 @@
 {block content}
 <div class="data-cards">
 <section class="card normal-card">
+<div>
 <header>
 <h1>Osobní údaje</h1>
 </header>
@@ -12,6 +13,36 @@
 	<dt>Datum narození</dt>
 	<dd>{$data->birthdate|date:'%d.%m.%Y'}</dd>
 </dl>
+</div>
+</section>
+<section class="card normal-card">
+<header>
+<h1>Členství ve skupinách</h1>
+</header>
+{snippet membershipList}
+{if $membership}
+<table class="table">
+<tbody>
+{foreach $membership as $group}
+<tr class="{if $group->user_id == $data->id}info{/if} {if $group->active == 0}disabled{/if}"><td>{$group->name}</td><td><a n:href="kick! 'user' => $data->id, 'group' => $group->group_id" class="ajax out icon-button">Odstranit</a></td></tr>
+{/foreach}
+</tbody>
+</table>
+{else}
+<p>Uživatel není členem žádné skupiny.</p>
+{/if}
+{/snippet}
+<footer class="inline-form-inside">
+	{snippet addMembershipForm}
+	<form n:name=addMembershipForm class="form form-inline">
+	 <select n:name=selection class="form-control fill-width"></select>
+	 <input n:name=id type=hidden>
+	 <div class="icons">
+	  <input class="ajax in icon-button" type=submit n:name=send />
+	 </div>
+	</form>
+	{/snippet}
+</footer>
 </section>
 </div>
 {/block}

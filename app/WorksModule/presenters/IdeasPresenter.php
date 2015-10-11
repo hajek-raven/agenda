@@ -296,13 +296,14 @@ class IdeasPresenter extends \App\Presenters\SecuredGridPresenter
 	}
 
 	public function handleRefreshGoal($id)
-  {
+  	{
 		$this->template->goals = $this->model->getGoals($id);
-    if ($this->isAjax()) {
-      $this->redrawControl('goalList');
+    	if ($this->isAjax()) 
+		{
+      		$this->redrawControl('goalList');
 			$this->redrawControl('flashMessages');
-    }
-  }
+    	}
+  	}
 
 	public function handleDeleteGoal($id,$order)
 	{

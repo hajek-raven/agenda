@@ -8,8 +8,11 @@ use Nette,
 /**
  * Homepage presenter.
  */
+
 class HomepagePresenter extends \App\Presenters\SecuredPresenter
 {
+ 	/** @var \App\Model\Users @inject */
+	public $model;
 
 	public function __construct()
 	{
@@ -19,7 +22,9 @@ class HomepagePresenter extends \App\Presenters\SecuredPresenter
 
 	public function renderDefault()
 	{
-		$this->template->anyVariable = 'any value';
+		$this->template->users = $this->model->query("SELECT count(*) as total FROM user")->fetch();
+		$this->template->groups = $this->model->query("SELECT count(*) as total FROM `group`")->fetch();
+		$this->template->files = $this->model->query("SELECT count(*) as total FROM `file`")->fetch();
 	}
 
 }

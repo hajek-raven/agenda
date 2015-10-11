@@ -75,16 +75,6 @@ form .error {
 	font-size: 1.5rem;
 	font-weight: 400;
 }
-#local-menu {
-}
-X.works #site-heading {
-	background-color: #F44336;
-	color: white;
-}
-X.works #local-menu {
-	background-color: #B71C1C;
-	color: white;
-}
 #content-wrapper {
 	background-color: #DCEDC8;
 }
@@ -322,6 +312,11 @@ table.table {border-collapse: inherit}
 table.table thead th {vertical-align: middle}
 table.table th, .table td {vertical-align: middle}
 table.table tfoot td {text-align: inherit}
+table.table .success {background-color: #4CAF50;}
+table.table .danger {background-color: #E53935}
+table.table .info {background-color: #2196F3;}
+table.table .warning {background-color: #FF5722;}
+table.table .disabled {background-color: #eeeeee; color: #aaaaaa;}
 /* Grido */
 .grido thead {font-size: 1.15em}
 .grido tfoot {font-size: 1.1em}

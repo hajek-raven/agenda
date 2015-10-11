@@ -6,7 +6,7 @@ class Membership extends Common\GridTableModel
 	public function __construct(\DibiConnection $connection)
  	{
 		parent::__construct($connection, "membership");
-    $this->selection->leftJoin("group")->on("membership.group_id = group.id");
+    	$this->selection->leftJoin("user")->on("membership.user_id = user.id");
   }
 
 	public function delete($id)
@@ -22,5 +22,32 @@ class Membership extends Common\GridTableModel
 	public function in($user,$group)
 	{
 		$this->query("INSERT INTO " . $this->getTableName() . " (`user_id` ,`group_id`) VALUES ($user, $group)");
+	}
+	
+	public function userIsMember($userId)
+	{
+		return $this->query("SELECT * FROM `membership` JOIN `group` ON membership.`group_id` = `group`.id WHERE membership.user_id = ".$userId." ORDER BY name")->fetchAll();
+	}
+	
+	public function userIsNotMemberOfGroupsAsArray($userId)
+	{
+		$return = array();
+		$data = $this->query("SELECT id,name,COALESCE(SUM(membership.user_id=$userId),0) AS member FROM `group` LEFT JOIN `membership` ON `group`.`id` = `membership`.`group_id` GROUP BY `group`.`id` HAVING member = 0 ORDER BY name")->fetchAll();
+		foreach($data as $record)
+		{
+			$return[$record->id] = $record->name;
+		}
+		return $return;
+	}
+	
+	public function usersAreNotMembersOfGroupAsArray($groupId)
+	{
+		$return = array();
+		$data = $this->query("SELECT id,lastname,firstname,COALESCE(SUM(membership.group_id=$groupId),0) AS member FROM `user` LEFT JOIN `membership` ON `user`.`id` = `membership`.`user_id` GROUP BY `user`.`id` HAVING member = 0 ORDER BY lastname,firstname")->fetchAll();
+		foreach($data as $record)
+		{
+			$return[$record->id] = $record->lastname .", ".$record->firstname;
+		}
+		return $return;
 	}
 }

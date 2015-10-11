@@ -20,5 +20,6 @@ class baseGrid extends \Grido\Grid
   //$this->setDefaultPerPage($this->settings["table_rows"]);
   $this->tablePrototype = \Nette\Utils\Html::el('table');
   $this->tablePrototype->id($this->getName())->class[] = 'table table-striped table-hover';
+  $this->setExport();
  }
 }

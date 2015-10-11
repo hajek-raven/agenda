@@ -52,6 +52,7 @@
 	{snippet goalForm}
 	<form n:name=newGoalForm class="form form-inline">
 	 <input n:name=description class="form-control fill-width">
+	 <input n:name=id type=hidden>
 	 <div class="icons">
 	  <input class="ajax new icon-button" type=submit n:name=send>
 	  <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button">Obnovit</a>
@@ -92,6 +93,7 @@
 	{snippet outlineForm}
 	<form n:name=newOutlineForm class="form form-inline">
 	<input n:name=description class="fill-width form-control">
+	<input n:name=id type=hidden>
 	<div class="icons">
 	 <input class="ajax new icon-button" type=submit n:name=send>
 	 <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button">Obnovit</a>

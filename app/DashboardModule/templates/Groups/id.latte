@@ -1,6 +1,7 @@
 {block content}
 <div class="data-cards">
 <section class="card normal-card">
+<div>
 <h1>Obecné údaje</h1>
 <dl>
 	<dt>Název</dt>
@@ -12,8 +13,10 @@
 	<dt>Správce</dt>
 	<dd>{$data->firstname} {$data->lastname}</dd>
 </dl>
+</div>
 </section>
 <section class="card normal-card">
+<div>
 <h1>Přístupnost</h1>
 <dl>
 	<dt>Aktivní</dt>
@@ -29,7 +32,27 @@
 	<dt>Privátní seznam členů</dt>
 	<dd>{if $data->list_members}Ano{else}Ne{/if}</dd>
 </dl>
+</div>
 </section>
+{if $listVisible}
+<section class="card normal-card">
+<div>
+<h1>Seznam členů</h1>
+{control gridMembers}
+</div>
+{if $listManageable}
+<footer class="inline-form-inside">
+	<form n:name=addMembershipForm class="form form-inline">
+	 <select n:name=selection class="form-control fill-width"></select>
+	 <input n:name=id type=hidden>
+	 <div class="icons">
+	  <input class="ajax in icon-button" type=submit n:name=send />
+	 </div>
+	</form>
+</footer>
+{/if}
+</section>
+{/if}
 </div>
 {/block}
 {block menu}

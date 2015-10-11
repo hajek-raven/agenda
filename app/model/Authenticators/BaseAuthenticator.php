@@ -37,7 +37,7 @@ abstract class BaseAuthenticator extends Nette\Object
     $userData = $this->usersModel->get($userID);
     if (!$userData) throw new \Nette\Security\AuthenticationException('Neexistují odpovídající data o uživateli.', self::FAILURE);
     unset($userData->id);
-    $membershipData = $this->membershipModel->findBy(array("membership.user_id" => $userID))->fetchAll();
+    $membershipData = $this->membershipModel->query("SELECT `group`.* FROM membership JOIN `group` ON `group`.id = membership.group_id WHERE membership.user_id = ". $userID)->fetchAll();
     $roles = array();
     foreach($membershipData as $record)
     {

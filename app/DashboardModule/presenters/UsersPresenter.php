@@ -14,15 +14,19 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 	public $model;
 	/** @var \App\Model\Authenticator\LocalAuthenticator @inject */
 	public $localUserModel;
+	/** @var \App\Model\Membership @inject */
+	public $membershipModel;
 	/** @var \App\Forms\UserFormFactory @inject */
 	public $formFactory;
 	/** @var \App\Forms\PasswordFormFactory @inject */
 	public $passwordFormFactory;
+	/** @var \App\Forms\SelectLineFormFactory @inject */
+	public $selectFormFactory;
 
 	public function __construct()
 	{
 		parent::__construct();
-		$this->setTitle("Správa uživatelů");
+		$this->setTitle("Uživatelé");
 	}
 
 	protected function createComponentGrid($name)
@@ -51,6 +55,15 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 	{
 		$form = $this->passwordFormFactory->create();
       	$form->onSuccess[] = array($this, 'passwordFormSucceeded');
+		return $form;
+	}
+
+	protected function createComponentAddMembershipForm()
+	{
+		$form = $this->selectFormFactory->create();
+		$form->addClass('ajax');
+		$form->addClass('form-inline');
+    	$form->onSuccess[] = array($this, 'addMembershipFormSucceeded');
 		return $form;
 	}
 
@@ -107,7 +120,14 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 				$this->flashMessage("Při aktivování účtu došlo k chybě.","danger");
 			}
 		}
-		$this->redirect("default");
+		if (!$this->isAjax())
+		{
+			$this->redirect('default');
+		}      
+    	else 
+		{
+			$this->invalidateControl('flashMessages');
+		}
 	}
 
 	public function actionDisable($id)
@@ -134,7 +154,14 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 				$this->flashMessage("Při blokování účtu došlo k chybě.","danger");
 			}
 		}
-		$this->redirect("default");
+		if (!$this->isAjax())
+		{
+			$this->redirect('default');
+		}      
+    	else 
+		{
+			$this->invalidateControl('flashMessages');
+		}
 	}
 
 	public function actionPassword($id)
@@ -227,6 +254,72 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 		finally
 		{
 			$this->redirect("id",$id);
+		}
+	}
+	
+	public function actionId($id)
+	{
+		$data = $this->model->get($id);
+		$this->setTitle("Uživatel " . $data->lastname . ", " . $data->firstname);
+		$this->template->data = $data;
+		$this->template->membership = $this->membershipModel->userIsMember($id);
+		$addMembershipForm = $this["addMembershipForm"];
+		$addMembershipForm["id"]->setValue($id);
+		$addMembershipForm["selection"]->setItems($this->membershipModel->userIsNotMemberOfGroupsAsArray($id));
+	}
+	
+	public function handleKick($user,$group)
+  	{
+		if ($this->user->isInRole("administrator"))
+		{
+			$this->membershipModel->out($user,$group);
+			$this->flashMessage("Uživatel již není členem skupiny.","success");
+		} else {
+			$this->flashMessage("Nemáte oprávnění rušit členství uživatelů ve skupinách.","success");
+		}
+		$this->template->membership = $this->membershipModel->userIsMember($user);
+		
+    	if ($this->isAjax()) 
+		{
+			$form = $this["addMembershipForm"];
+			$form["selection"]->setItems($this->membershipModel->userIsNotMemberOfGroupsAsArray($user));
+			$form["selection"]->setValue(null);
+			$this->invalidateControl('addMembershipForm');
+      		$this->redrawControl('membershipList');
+			$this->redrawControl('flashMessages');
+    	}
+  	}
+	  
+	public function addMembershipFormSucceeded($form,$values)
+	{	
+		$data = $this->model->get($values->id);
+		if ($data && ($this->user->isInRole("administrator")))
+		{
+			try
+			{
+				$this->membershipModel->in($values->id,$values->selection);
+			}
+			catch (Exception $e)
+			{
+				$this->flashMessage("Přidání do skupiny se nepodařilo.","danger");
+			}
+		}
+		else
+		{
+			$this->flashMessage("Nemáte oprávnění tímto způsobem přidávat někoho do skupiny.","danger");
+		}
+		if (!$this->isAjax())
+		{
+			$this->redirect('this');
+		}      
+    	else 
+		{
+			$this->template->membership = $this->membershipModel->userIsMember($values->id);
+			$this->invalidateControl('membershipList');
+			$this->invalidateControl('flashMessages');
+        	$form["selection"]->setItems($this->membershipModel->userIsNotMemberOfGroupsAsArray($values->id));
+			$form["selection"]->setValue(null);
+			$this->invalidateControl('addMembershipForm');
 		}
 	}
 }

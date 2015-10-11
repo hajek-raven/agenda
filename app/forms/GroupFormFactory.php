@@ -25,7 +25,7 @@ class GroupFormFactory extends Nette\Object
   		$form->addCheckbox('visible_members','Viditelná členy');
   		$form->addCheckbox('list_all','Veřejný seznam členů');
   		$form->addCheckbox('list_members','Privátní seznam členů');
-  		$form->addSelect('user_id','Správce',$users)->setRequired("Je nutné určit správce skupiny")->setPrompt("-- Vyberte --");
+  		$form->addSelect('user_id','Správce',$users)->setPrompt("-- Vyberte --");
       	$form->onValidate[] = array($this, 'validityCheck');
       	$form->addSubmit('send', 'Uložit');
 		return $form;

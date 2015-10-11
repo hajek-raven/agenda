@@ -51,4 +51,31 @@ class Users extends Common\GridTableModel
 			return array();
 		}
 	}
+	
+  	public function activeUsersAsArray($append = array())
+  	{
+  		$sql = 'SELECT id,lastname,firstname,email FROM user WHERE active = 1 ';
+  		if($append) $sql .= ' OR id IN('.implode(',',$append).')';
+  		$sql .= ' ORDER BY lastname,firstname';
+  		$users = $this->query($sql)->fetchAll();
+        $usersArray = array();
+        foreach($users as $user)
+        {
+            $usersArray[$user->id] = $user->lastname . ', ' . $user->firstname;
+        }
+        return $usersArray;
+  	}
+	  
+  	public function listedUsersAsArray($list = array())
+  	{
+  		$sql = 'SELECT id,lastname,firstname,email FROM user WHERE id IN('.implode(',',$list).')';
+  		$sql .= ' ORDER BY lastname,firstname';
+  		$users = $this->query($sql)->fetchAll();
+        $usersArray = array();
+        foreach($users as $user)
+        {
+            $usersArray[$user->id] = $user->lastname . ', ' . $user->firstname;
+        }
+        return $usersArray;
+  	}
 }
