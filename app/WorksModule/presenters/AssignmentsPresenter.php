@@ -103,7 +103,7 @@ class AssignmentsPresenter extends \App\Presenters\SecuredGridPresenter
 		{
 			try
 			{
-				$assignment = $this->assignmentModel->get($values->wrk_assignment_id);
+				$assignment = $this->ideaModel->get($values->wrk_assignment_id);
 				if (!$values->name) $values->name = $assignment->name;
 				$values->created_by = $this->user->id;
 				$values->status = 0;

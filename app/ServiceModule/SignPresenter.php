@@ -110,25 +110,25 @@ class SignPresenter extends \App\Presenters\BasePresenter
 		try
 		{
 			$id = $this->model->insert($values);
-			$this->model->update($id,array("active" => 0));
+			$this->model->update($id,array("enabled" => 0));
 			$this->flashMessage("Uživatel byl úspěšně zaregistrován.","success");
 			$this->userModel->add($id,$password);
 			$random = \Nette\Utils\Random::generate();
 			$this->userModel->setToken($id,$random);
-      $template = $this->createTemplate()->setFile(__DIR__ . '/../templates/emails/accountVerification.latte');
+      		$template = $this->createTemplate()->setFile(__DIR__ . '/../templates/emails/accountVerification.latte');
 			$template->theme = "Ověření registrace";
 			$template->firstname = $values->firstname;
-      $template->lastname = $values->lastname;
-      $template->gender = $values->gender;
-      $template->username = $values->email;
-      $template->verificationToken = $random;
-      $mail = new \Nette\Mail\Message();
-      $mail->setFrom($this->senderName)
+      		$template->lastname = $values->lastname;
+      		$template->gender = $values->gender;
+      		$template->username = $values->email;
+      		$template->verificationToken = $random;
+      		$mail = new \Nette\Mail\Message();
+      		$mail->setFrom($this->senderName)
         		->addTo($values->email)
          		->setSubject("Potvrzení registrace")
          		->setHtmlBody($template);
-   		$this->mailer->send($mail);
-   		$this->flashMessage("Na adresu " .$values->email . " byl zaslán ověřovací kód.","info");
+   			$this->mailer->send($mail);
+   			$this->flashMessage("Na adresu " .$values->email . " byl zaslán ověřovací kód.","info");
 		}
 		catch (Exception $e)
 		{
@@ -157,7 +157,7 @@ class SignPresenter extends \App\Presenters\BasePresenter
 			$id = $userData->id;
 			try
 			{
-				$this->model->update($id,array("active" => 1));
+				$this->model->update($id,array("enabled" => 1));
 				$this->userModel->removeToken($id);
 				$this->userModel->setValidated($id);
 				$this->flashMessage("Registrace je dokončena.","success");

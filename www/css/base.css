@@ -147,9 +147,9 @@ div.big-icon {
 .edit, .table .btn-mini.grid-action-edit {background-image: url("../images/icons/black/edit.svg");}
 .delete, .table .btn-mini.grid-action-delete, .icon-button.remove, .table .btn-mini.grid-action-remove {background-image: url("../images/icons/black/trash.svg");}
 .members, .group, .table .btn-mini.grid-action-members {background-image: url("../images/icons/black/group.svg");}
-.password, .table .btn-mini.grid-action-password {background-image: url("../images/icons/black/key.svg");}
-.enable, .yes, .table .btn-mini.grid-action-enable {background-image: url("../images/icons/black/yes.svg");}
-.disable, .no, .table .btn-mini.grid-action-disable {background-image: url("../images/icons/black/no.svg");}
+.password {background-image: url("../images/icons/black/key.svg");}
+.enable, .yes, .table .btn-mini.grid-action-enable, .activate, .table .btn-mini.grid-action-activate {background-image: url("../images/icons/black/yes.svg");}
+.disable, .no, .table .btn-mini.grid-action-disable, .deactivate, .table .btn-mini.grid-action-deactivate {background-image: url("../images/icons/black/no.svg");}
 .menu {background-image: url("../images/icons/black/menu.svg");}
 .user {background-image: url("../images/icons/black/human.svg");}
 .database {background-image: url("../images/icons/black/database.svg");}

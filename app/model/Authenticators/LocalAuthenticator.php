@@ -36,8 +36,8 @@ final class LocalAuthenticator extends CredentialsAuthenticator
       $this->localLoginModel->update($loginData->user_id, array("password" => Passwords::hash($password)));
     }
     $identity = $this->buildIdentity($loginData->user_id);
-    $active = $identity->getData()["active"];
-    if(!$active) throw new \Nette\Security\AuthenticationException('Tento účet není aktivní.', self::INACTIVE);
+    $enabled = $identity->getData()["enabled"];
+    if(!$enabled) throw new \Nette\Security\AuthenticationException('Tento účet je zablokovaný.', self::INACTIVE);
     $this->user->login($identity);
   }
 

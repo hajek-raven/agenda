@@ -38,12 +38,15 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 		$grid->addColumnText('gender', 'Pohlaví')->setSortable()->setReplacement($grid::$genderReplacements)->setFilterSelect($grid::$genderFilters);
 		$grid->addColumnDate('birthdate', 'Narození')->setSortable()->setFilterDate();
 		$grid->addColumnText('active', 'Aktivní')->setSortable()->setReplacement($grid::$booleanReplacements)->setFilterSelect($grid::$booleanFilters);
+		$grid->addColumnText('enabled', 'Povolený')->setSortable()->setReplacement($grid::$booleanReplacements)->setFilterSelect($grid::$booleanFilters);
 		$grid->addActionHref("id","Detail");
 		$grid->addActionHref("delete","Odstranit")->setConfirm(function($item) {
 						return "Opravdu chcete odstranit uživatele {$item->firstname} {$item->lastname}?";
 			});
-		$grid->addActionHref('enable', 'Povolit')->setDisable(function($item){return ($item->active == 1);});
-		$grid->addActionHref('disable', 'Zablokovat')->setDisable(function($item){return ($item->active == 0);});
+		$grid->addActionHref('activate', 'Aktivovat')->setDisable(function($item){return ($item->active == 1);});
+		$grid->addActionHref('deactivate', 'Deaktivovat')->setDisable(function($item){return ($item->active == 0);});
+		$grid->addActionHref('enable', 'Povolit')->setDisable(function($item){return ($item->enabled == 1);});
+		$grid->addActionHref('disable', 'Zablokovat')->setDisable(function($item){return ($item->enabled == 0);});
 		$operations = array('delete' => 'Odstranit', 'enable' => 'Povolit', 'disable' => 'Zablokovat');
 		$grid->setOperation($operations, callback($this, 'gridOperationsHandler'))
             ->setConfirm('delete', 'Opravdu chcete smazat všech %i uživatelů?');
@@ -107,8 +110,8 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 				$data = $selector->where("id = ".$record)->fetch();
 				if($data)
 				{
-					$this->model->update($record,array("active" => 1));
-					$this->flashMessage("Účet " . $data->lastname . ", " . $data->firstname . " je nyní aktivní.","success");
+					$this->model->update($record,array("enabled" => 1));
+					$this->flashMessage("Účet " . $data->lastname . ", " . $data->firstname . " může tuto aplikaci používat.","success");
 				}
 				else
 				{
@@ -117,7 +120,7 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 			}
 			catch (Exception $e)
 			{
-				$this->flashMessage("Při aktivování účtu došlo k chybě.","danger");
+				$this->flashMessage("Při povolování účtu došlo k chybě.","danger");
 			}
 		}
 		if (!$this->isAjax())
@@ -141,8 +144,76 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 				$data = $selector->where("id = ".$record)->fetch();
 				if($data)
 				{
-					$this->model->update($record,array("active" => 0));
+					$this->model->update($record,array("enabled" => 0));
 					$this->flashMessage("Účet " . $data->lastname . ", " . $data->firstname . " je nyní zablokovaný.","success");
+				}
+				else
+				{
+					$this->flashMessage("Takový účet (ID:".$record.") neexistuje.","warning");
+				}
+			}
+			catch (Exception $e)
+			{
+				$this->flashMessage("Při blokování účtu došlo k chybě.","danger");
+			}
+		}
+		if (!$this->isAjax())
+		{
+			$this->redirect('default');
+		}      
+    	else 
+		{
+			$this->invalidateControl('flashMessages');
+		}
+	}
+
+	public function actionActivate($id)
+	{
+		$process = explode(',',$id);
+		foreach ($process as $record)
+		{
+			try
+			{
+				$selector = $this->model->getClonedSelection();
+				$data = $selector->where("id = ".$record)->fetch();
+				if($data)
+				{
+					$this->model->update($record,array("active" => 1));
+					$this->flashMessage("Účet " . $data->lastname . ", " . $data->firstname . " je nyní aktivní.","success");
+				}
+				else
+				{
+					$this->flashMessage("Takový účet (ID:".$record.") neexistuje.","warning");
+				}
+			}
+			catch (Exception $e)
+			{
+				$this->flashMessage("Při aktivování účtu došlo k chybě.","danger");
+			}
+		}
+		if (!$this->isAjax())
+		{
+			$this->redirect('default');
+		}      
+    	else 
+		{
+			$this->invalidateControl('flashMessages');
+		}
+	}
+
+	public function actionDeactivate($id)
+	{
+		$process = explode(',',$id);
+		foreach ($process as $record)
+		{
+			try
+			{
+				$selector = $this->model->getClonedSelection();
+				$data = $selector->where("id = ".$record)->fetch();
+				if($data)
+				{
+					$this->model->update($record,array("active" => 0));
+					$this->flashMessage("Účet " . $data->lastname . ", " . $data->firstname . " je nyní neaktivní.","success");
 				}
 				else
 				{
