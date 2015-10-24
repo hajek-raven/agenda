@@ -11,11 +11,14 @@ use Nette,
 class SignFormFactory extends Nette\Object
 {
 	/** @var User */
-	private $authenticationModel;
+	//private $authenticationModel;
+	private $authenticators;
 
-	public function __construct(\App\Model\Authenticator\CredentialsAuthenticator $authenticationModel)
+	public function __construct(array $authenticators = array())
+	// \App\Model\Authenticator\CredentialsAuthenticator $authenticationModel
 	{
-		$this->authenticationModel = $authenticationModel;
+		//$this->authenticationModel = $authenticationModel;
+		$this->authenticators = $authenticators;
 	}
 
 	/**
@@ -34,6 +37,49 @@ class SignFormFactory extends Nette\Object
 
 	public function formSucceeded($form, $values)
 	{
+		if (empty($this->authenticators))
+		{
+			$form->addError("Neexistuje žádný authenticator, proti kterému by bylo možné přihlašovací údaje ověřit.");
+		}
+		else
+		{
+			$successfull = false;
+			$errors = array();
+			foreach ($this->authenticators as $index => $authenticator)
+			{
+				try
+				{					
+					$authenticator->authenticate(array($values->username, $values->password));
+					$successfull = $index;
+					break;
+				}
+				catch (Nette\Security\AuthenticationException $e)
+				{
+					$className = explode("\\",get_class($authenticator));
+					$errors[] = end($className) . ": " . $e->getMessage();
+				}
+			}
+			if($successfull !== false)
+			{
+				$succesfullAuthenticator = $this->authenticators[$successfull];
+				if ($values->remember)
+				{
+					$succesfullAuthenticator->getUser()->setExpiration('14 days', FALSE);
+				}
+				else
+				{
+					$succesfullAuthenticator->getUser()->setExpiration('20 minutes', TRUE);
+				}			
+			}
+			else
+			{
+				foreach ($errors as $error)
+				{
+					$form->addError($error);
+				}
+			}			
+		}
+		/*
 		if ($values->remember)
 		{
 			$this->authenticationModel->getUser()->setExpiration('14 days', FALSE);
@@ -50,6 +96,7 @@ class SignFormFactory extends Nette\Object
 		{
 			$form->addError($e->getMessage());
 		}
+		*/
 	}
 
 }

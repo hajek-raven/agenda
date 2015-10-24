@@ -5,26 +5,29 @@ namespace App\Model\Authenticator;
 use Nette,
     Nette\Security;
 
-class SimpleAuthenticator extends CredentialsAuthenticator
+class IMAPAuthenticator extends CredentialsAuthenticator
 {
   /** @var Nette\Security\User */
+  private $imapLoginModel;
 
-  private $loginData = array("admin" => "beruska");
-  private $identityData = array("admin" => 1);
-
-  public function __construct(Nette\Security\User $user, \App\Model\Users $usersModel, \App\Model\Membership $membershipModel)
+  public function __construct(Nette\Security\User $user, \App\Model\Users $usersModel, \App\Model\Membership $membershipModel, \DibiConnection $connection)
   {
     parent::__construct($user, $usersModel, $membershipModel);
+    $this->imapLoginModel = new ImapUserManager($connection);
   }
 
   public function authenticate(array $credentials)
   {
     list($username,$password) = $credentials;
-    if(!isset($this->loginData[$username]))
+    $loginData = $this->imapLoginModel->getBy(array("username" => $username));
+    $mbox = imap_open("{localhost:993/ssl/novalidate-cert}INBOX",$username, $password, OP_HALFOPEN | OP_SILENT);
+    imap_alerts();
+    imap_errors();    
+    if(!$loginData)
     {
       throw new \Nette\Security\AuthenticationException('Neznámé jméno uživatele.', self::IDENTITY_NOT_FOUND);
     }
-    elseif ($this->loginData[$username] != $password)
+    elseif (!$mbox)
     {
       throw new \Nette\Security\AuthenticationException('Nesprávné heslo.', self::INVALID_CREDENTIAL);
     }
@@ -32,5 +35,14 @@ class SimpleAuthenticator extends CredentialsAuthenticator
     $enabled = $identity->getData()["enabled"];
     if(!$enabled) throw new \Nette\Security\AuthenticationException('Tento účet je zablokovaný.', self::INACTIVE);
     $this->user->login($identity);
+  }
+}
+
+class ImapUserManager extends \App\Model\Common\TableModel
+{
+  public function __construct($connection)
+  {
+    parent::__construct($connection,"login_imap");
+    $this->setPrimaryKey("user_id");
   }
 }

@@ -30,7 +30,10 @@ class SignPresenter extends \App\Presenters\BasePresenter
 	public $model;
 
 	/** @var \App\Model\Authenticator\LocalAuthenticator @inject */
-	public $userModel;
+	public $localUserModel;
+	
+	/** @var \App\Model\Authenticator\LocalAuthenticator @inject */
+	public $IMAPUserModel;
 
 	/** @var \Nette\Mail\IMailer @inject */
 	public $mailer;
@@ -38,7 +41,7 @@ class SignPresenter extends \App\Presenters\BasePresenter
 	/** @persistent */
   public $backlink = '';
 
-  public $senderName = 'Michal Stehlí­k <rawac.st@gmail.com>';
+  public $senderName = 'Mailer <rawac.st@gmail.com>';
 
   public function __construct()
 	{
@@ -48,7 +51,7 @@ class SignPresenter extends \App\Presenters\BasePresenter
 
 	protected function createComponentSignInForm()
 	{
-		$form = $this->factory->create($this->userModel);
+		$form = $this->factory->create();
 		$form->onSuccess[] = function ($form)
 		{
 			$this->restoreRequest($this->backlink);
@@ -186,17 +189,17 @@ class SignPresenter extends \App\Presenters\BasePresenter
 			$loginData = $this->userModel->query("SELECT * FROM login_local WHERE user_id = ".$id)->fetch();
 			if(!$loginData) $this->userModel->add($id,\Nette\Utils\Random::generate());
 			$this->userModel->setToken($id,$random);
-      $template = $this->createTemplate()->setFile(__DIR__ . '/../templates/emails/passwordRecovery.latte');
-      $template->username = $values->username;
+      		$template = $this->createTemplate()->setFile(__DIR__ . '/../templates/emails/passwordRecovery.latte');
+      		$template->username = $values->username;
 			$template->theme = "Nastavení hesla";
-      $template->verificationToken = $random;
-      $mail = new \Nette\Mail\Message();
-      $mail->setFrom($this->senderName)
+      		$template->verificationToken = $random;
+      		$mail = new \Nette\Mail\Message();
+      		$mail->setFrom($this->senderName)
          	 ->addTo($values->username)
          	 ->setSubject("Nastavení hesla")
          	 ->setHtmlBody($template);
-      $this->mailer->send($mail);
-      $this->flashMessage("Na adresu " .$values->username . " byl zaslán ověřovací kód.","info");
+      		$this->mailer->send($mail);
+      		$this->flashMessage("Na adresu " .$values->username . " byl zaslán ověřovací kód.","info");
 		}
 		catch (Exception $e)
 		{
