@@ -7,6 +7,8 @@
 <nav>
 	<a class="back icon-button" n:href="Homepage:default">Zpět</a>
 	<a class="new icon-button" n:href="add">Nový</a>
+	{if ($user->isAllowed("Dashboard:Users",'exportAll'))}<a class="download icon-button" n:href="exportAll" role="button">Export</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'import'))}<a class="upload icon-button" n:href="import" role="button">Import</a>{/if}
 </nav>
 {/block}
 {block scripts}

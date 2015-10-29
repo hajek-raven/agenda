@@ -198,7 +198,7 @@ class FilesPresenter extends \App\Presenters\SecuredGridPresenter
 		{
 			$this->flashMessage("Během nahrávání souboru došlo k chybě.","danger");
 		}
-		finally
+		//finally
 		{
 			$this->redirect("default");
 		}

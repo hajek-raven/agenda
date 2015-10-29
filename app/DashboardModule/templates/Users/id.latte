@@ -13,6 +13,17 @@
 	<dt>Datum narození</dt>
 	<dd>{$data->birthdate|date:'%d.%m.%Y'}</dd>
 </dl>
+<h1>Přihlašovací údaje</h1>
+<dl>
+	<dt>Lokální přihlašovací jméno</dt>
+	<dd>{$data->email}</dd>
+	<dt>Lokální účet založen</dt>
+	<dd>{if ($data->local_registered)}{$data->local_registered|date:'%d.%m.%Y %H:%M'}{else}dosud nezaložen{/if}</dd>
+	{if ($data->imap_username)}
+	<dt>Školní přihlašovací jméno</dt>
+	<dd>{$data->imap_username}</dd>
+	{/if}
+</dl>	
 </div>
 </section>
 <section class="card normal-card">
@@ -50,6 +61,8 @@
 <nav>
 	<a class="back icon-button" n:href="default">Zpět</a>
 	{if ($user->isAllowed("Dashboard:Users",'edit'))}<a class="edit icon-button" n:href="edit, $data->id" role="button">Editace</a>{/if}
-	{if ($user->isAllowed("Dashboard:Users",'password'))}<a class="password icon-button" n:href="password, $data->id" role="button">Nastavení lokálního hesla</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'password'))}<a class="password icon-button" n:href="password, $data->id" role="button">Lokální&nbsp;heslo</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'setImap'))}<a class="password icon-button" n:href="setImap, $data->id" role="button">Školní&nbsp;účet</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'removeImap'))}<a class="delete icon-button" n:href="removeImap, $data->id" role="button">Zrušení</a>{/if}
 </nav>
 {/block}

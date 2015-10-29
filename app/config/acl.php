@@ -9,7 +9,8 @@ class Acl extends Permission
         //static roles
         $this->addRole('guest');
         $this->addRole('authenticated','guest');
-        $this->addRole('administrator','authenticated');
+        $this->addRole('manager','authenticated');
+        $this->addRole('administrator','manager');
         $this->addRole('student','authenticated');
         $this->addRole('teacher','authenticated');
         //dynamic roles

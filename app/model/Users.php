@@ -6,7 +6,11 @@ class Users extends Common\GridTableModel
 	public function __construct(\DibiConnection $connection)
  	{
 		parent::__construct($connection, "user");
-		$this->selection->leftJoin("login_local")->on("user.id = login_local.user_id");
+		$this->getSelection()->removeClause("SELECT");
+		$this->getSelection()->select("user.*, login_local.registered AS local_registered, login_imap.username AS imap_username, bakalari_code, bakalari_table")
+			->leftJoin("login_local")->on("user.id = login_local.user_id")
+			->leftJoin("import_bakalari")->on("user.id = import_bakalari.user_id")
+			->leftJoin("login_imap")->on("user.id = login_imap.user_id");
   }
 
 	public function asArray()
@@ -77,5 +81,5 @@ class Users extends Common\GridTableModel
             $usersArray[$user->id] = $user->lastname . ', ' . $user->firstname;
         }
         return $usersArray;
-  	}
+  	}  
 }

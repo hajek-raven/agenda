@@ -31,11 +31,22 @@ class IMAPAuthenticator extends CredentialsAuthenticator
     {
       throw new \Nette\Security\AuthenticationException('Nesprávné heslo.', self::INVALID_CREDENTIAL);
     }
-    $identity = $this->buildIdentity($this->identityData[$username]);
+    $identity = $this->buildIdentity($loginData->user_id);
     $enabled = $identity->getData()["enabled"];
     if(!$enabled) throw new \Nette\Security\AuthenticationException('Tento účet je zablokovaný.', self::INACTIVE);
     $this->user->login($identity);
   }
+  
+  public function add($id,$username)
+  {
+    $this->imapLoginModel->delete($id);
+    $this->imapLoginModel->dumbInsert(array("user_id" => $id, "username" => $username));
+  } 
+  
+  public function delete($id)
+  {
+    $this->imapLoginModel->delete($id);
+  } 
 }
 
 class ImapUserManager extends \App\Model\Common\TableModel

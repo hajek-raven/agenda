@@ -8,10 +8,10 @@ class Files extends \App\Model\Common\GridTableModel
 	public function __construct(\DibiConnection $connection)
  	{
 		parent::__construct($connection, "file");
-    $this->getSelection()->removeClause("SELECT");
-    $this->getSelection()->select("file.*, user.firstname, user.lastname")->leftJoin("user")->on("file.user_id = user.id");
-    $this->setPrimaryKey("file.id");
-  }
+    	$this->getSelection()->removeClause("SELECT");
+    	$this->getSelection()->select("file.*, user.firstname, user.lastname")->leftJoin("user")->on("file.user_id = user.id");
+    	$this->setPrimaryKey("file.id");
+  	}
 
 	public function setStoragePath($storagePath)
 	{

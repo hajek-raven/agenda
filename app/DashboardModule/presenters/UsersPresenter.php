@@ -14,14 +14,22 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 	public $model;
 	/** @var \App\Model\Authenticator\LocalAuthenticator @inject */
 	public $localUserModel;
+	/** @var \App\Model\Authenticator\IMAPAuthenticator @inject */
+	public $imapUserModel;
 	/** @var \App\Model\Membership @inject */
 	public $membershipModel;
+	/** @var \App\Model\Import\FileUserImport @inject */
+	public $FileUserImport;
 	/** @var \App\Forms\UserFormFactory @inject */
 	public $formFactory;
 	/** @var \App\Forms\PasswordFormFactory @inject */
 	public $passwordFormFactory;
+	/** @var \App\Forms\UsernameFormFactory @inject */
+	public $usernameFormFactory;
 	/** @var \App\Forms\SelectLineFormFactory @inject */
 	public $selectFormFactory;
+	/** @var \App\Forms\UploadFileFormFactory @inject */
+	public $uploadFormFactory;
 
 	public function __construct()
 	{
@@ -37,6 +45,8 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 		$grid->addColumnText('lastname', 'Příjmení')->setSortable()->setFilterText();
 		$grid->addColumnText('gender', 'Pohlaví')->setSortable()->setReplacement($grid::$genderReplacements)->setFilterSelect($grid::$genderFilters);
 		$grid->addColumnDate('birthdate', 'Narození')->setSortable()->setFilterDate();
+		$grid->addColumnText('email', 'Email')->setSortable()->setFilterText();
+		$grid->addColumnText('imap_username', 'Školní login')->setSortable()->setFilterText();
 		$grid->addColumnText('active', 'Aktivní')->setSortable()->setReplacement($grid::$booleanReplacements)->setFilterSelect($grid::$booleanFilters);
 		$grid->addColumnText('enabled', 'Povolený')->setSortable()->setReplacement($grid::$booleanReplacements)->setFilterSelect($grid::$booleanFilters);
 		$grid->addActionHref("id","Detail");
@@ -61,12 +71,26 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 		return $form;
 	}
 
+	public function createComponentFormUsername()
+	{
+		$form = $this->usernameFormFactory->create();
+      	$form->onSuccess[] = array($this, 'usernameFormSucceeded');
+		return $form;
+	}
+
 	protected function createComponentAddMembershipForm()
 	{
 		$form = $this->selectFormFactory->create();
 		$form->addClass('ajax');
 		$form->addClass('form-inline');
     	$form->onSuccess[] = array($this, 'addMembershipFormSucceeded');
+		return $form;
+	}
+
+	public function createComponentImportForm()
+	{
+		$form = $this->uploadFormFactory->create();
+      	$form->onSuccess[] = array($this, 'importFormSucceeded');
 		return $form;
 	}
 
@@ -91,6 +115,7 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 			$this->setTitle("Editace uživatele " . $record->lastname . ", " . $record->firstname);
 			$form->setDefaults($record);
 			$form["birthdate"]->setDefaultValue((new \Nette\DateTime($record->birthdate))->format("Y-m-d"));
+			$this->template->id = $id;
 		}
 		else
 		{
@@ -275,6 +300,73 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 		$this->redirect("default");
 	}
 
+	public function actionSetImap($id)
+	{
+		$record = $this->model->get($id);
+		if ($record)
+		{
+			$form = $this["formUsername"];
+			$this->setTitle("Nastavení školního účtu");
+			$this->template->id = $id;
+			$form["id"]->setValue($id);	
+			$form["username"]->setDefaultValue($record->imap_username);		
+		}
+		else
+		{
+			$this->flashMessage("Takový uživatel neexistuje.","danger");
+			$this->redirect("default");
+		}		
+	}
+
+	public function usernameFormSucceeded($form,$values)
+	{
+		$id = $values->id;
+		unset($values->id);
+		$data = $this->model->get($id);
+		if($data)
+		{
+			try
+			{
+				$this->imapUserModel->add($id,$values->username);
+				$this->flashMessage("Účet byl nastaven.","success");
+				$this->redirect("id",$id);				
+			}
+			catch (Exception $e)
+			{
+				$this->flashMessage("Nastavení účtu se nepodařilo.","danger");
+			}
+		}
+		else
+		{
+			$this->flashMessage("Takový účet neexistuje.","warning");
+		}
+		$this->redirect("default");
+	}
+
+	public function actionRemoveImap($id)
+	{
+		$record = $this->model->get($id);
+		if ($record)
+		{
+			try
+			{
+				$this->imapUserModel->delete($id);
+				$this->flashMessage("Byla zrušena možnost hlásit se přes školní účet.","success");
+								
+			}
+			catch (Exception $e)
+			{
+				$this->flashMessage("Nastavení účtu se nepodařilo.","danger");
+			}					
+		}
+		else
+		{
+			$this->flashMessage("Takový uživatel neexistuje.","danger");
+			$this->redirect("default");
+		}
+		$this->redirect("id",$id);		
+	}
+
 	public function actionDelete($id)
 	{
 		$process = explode(',',$id);
@@ -322,7 +414,7 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 		{
 			$this->flashMessage("Během ukládání dat uživatele došlo k chybě.","danger");
 		}
-		finally
+		//finally
 		{
 			$this->redirect("id",$id);
 		}
@@ -391,6 +483,61 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
         	$form["selection"]->setItems($this->membershipModel->userIsNotMemberOfGroupsAsArray($values->id));
 			$form["selection"]->setValue(null);
 			$this->invalidateControl('addMembershipForm');
+		}
+	}
+	
+	public function actionExportAll()
+	{
+		$fileData = $this->filesModel->reserveStorage($this->user->id,"Export uzivatelu ".date("c").".csv");
+		$this->FileUserImport->exportAll($fileData["filename"]);
+		$this->downloadFile($fileData["id"]);
+		$this->redirect('default');
+	}
+	
+	public function actionImport()
+	{
+		$this->setTitle("Import dat o uživatelích");
+	}
+	
+	public function importFormSucceeded($form,$values)
+	{
+		unset($values->id);
+		try
+		{
+			$file = $values->file;
+			if ($file->isOk)
+			{
+				$mime = $file->getContentType();
+				$name = $file->getName();
+				$safe = $file->getSanitizedName();
+				$size = $file->getSize();
+				$extension = \Nette\Utils\Strings::lower(pathinfo($name, PATHINFO_EXTENSION));
+				if (($mime == "text/plain") && ($extension == "csv"))
+				{
+					try
+					{
+						$type = $this->FileUserImport->import($file->getTemporaryFile());		
+						$this->flashMessage("Proběhl import dat ze souboru.","success");
+					}
+					catch (DataImportException $ex)
+					{
+						$this->flashMessage("Nebyla rozpoznána struktura dat: " . $ex->getMessage(),"danger");
+					}
+				}
+				else
+				{
+					$this->flashMessage("Nesprávný ty souboru. K importu dat je nutné použít soubor typu .csv","danger");
+				}
+			}
+			
+		}
+		catch (Exception $e)
+		{
+			$this->flashMessage("Během nahrávání souboru došlo k chybě.","danger");
+		}
+		//finally
+		{
+			//$this->redirect("default");
 		}
 	}
 }

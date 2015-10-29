@@ -13,7 +13,6 @@ class PasswordFormFactory extends Nette\Object
 	 */
 	public function create()
 	{
-		//$form = new BaseForm();
 		$form = new BaseForm();
   		$form->addHidden('id');
   		$form->addPassword('password', 'Heslo')->setRequired("Vyplňte heslo uživatele");
