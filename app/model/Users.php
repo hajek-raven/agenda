@@ -7,9 +7,8 @@ class Users extends Common\GridTableModel
  	{
 		parent::__construct($connection, "user");
 		$this->getSelection()->removeClause("SELECT");
-		$this->getSelection()->select("user.*, login_local.registered AS local_registered, login_imap.username AS imap_username, bakalari_code, bakalari_table")
+		$this->getSelection()->select("user.*, login_local.registered AS local_registered, login_imap.username AS imap_username")
 			->leftJoin("login_local")->on("user.id = login_local.user_id")
-			->leftJoin("import_bakalari")->on("user.id = import_bakalari.user_id")
 			->leftJoin("login_imap")->on("user.id = login_imap.user_id");
   }
 

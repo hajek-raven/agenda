@@ -28,7 +28,7 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 	public $usernameFormFactory;
 	/** @var \App\Forms\SelectLineFormFactory @inject */
 	public $selectFormFactory;
-	/** @var \App\Forms\UploadFileFormFactory @inject */
+	/** @var \App\Forms\ImportFileFormFactory @inject */
 	public $uploadFormFactory;
 
 	public function __construct()
@@ -89,7 +89,7 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 
 	public function createComponentImportForm()
 	{
-		$form = $this->uploadFormFactory->create();
+		$form = $this->uploadFormFactory->create($this->FileUserImport->encoding);
       	$form->onSuccess[] = array($this, 'importFormSucceeded');
 		return $form;
 	}
@@ -384,7 +384,7 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
         {
       		try
       		{
-      			$this->model->delete($id);
+      			$this->model->delete($data->id);
       			$this->flashMessage("Uživatel " . $data->lastname .", ". $data->firstname . " byl smazán.","success");
       		}
       		catch (Exception $e)
@@ -516,7 +516,7 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 				{
 					try
 					{
-						$type = $this->FileUserImport->import($file->getTemporaryFile());		
+						$type = $this->FileUserImport->import($file->getTemporaryFile(),$values);		
 						$this->flashMessage("Proběhl import dat ze souboru.","success");
 					}
 					catch (DataImportException $ex)

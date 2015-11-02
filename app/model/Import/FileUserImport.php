@@ -10,16 +10,19 @@ class FileUserImport extends BaseUserImport
   const UNKNOWN = -1;
   
   static private $separator = ";";
+  public $bom;
   
-  public function __construct(\App\Model\Users $userModel, \App\Model\Groups $groupModel)
+  public function __construct(\App\Model\Users $userModel, \App\Model\Membership $membershipModel)
   {
-	  parent::__construct($userModel, $groupModel);
+	  parent::__construct($userModel, $membershipModel);
+    $this->bom = ( chr(0xEF) . chr(0xBB) . chr(0xBF) );
   }
   
   public function exportAll($filename)
   {
 	  $data = $this->userModel->fetchAll();
     $fp = fopen($filename, 'w');
+    fputs($fp, $this->bom);
     foreach ($data as $index => $record) 
     {
       if($index == 0) {
@@ -32,12 +35,23 @@ class FileUserImport extends BaseUserImport
     fclose($fp);
   }
   
-  public function detectType(array $columnNames)
+  private function containsAllColumnNames($expected, $real)
   {
-    
+    foreach ($expected as $col)
+    { 
+      if (!in_array($col,$real)) return false;
+    }
+    return true;
   }
   
-  public function import($filename)
+  public function detectType(array $columnNames)
+  {
+    if ($this->containsAllColumnNames(array("firstname",	"lastname",	"gender",	"birthdate",	"active",	"email"),$columnNames)) return self::INTERNAL;
+    elseif ($this->containsAllColumnNames(array("RODNE_C",	"JMENO",	"PRIJMENI",	"POHLAVI",	"DATUM_NAR",	"E_MAIL", "LOGIN", "INTERN_KOD", "FUNKCE"),$columnNames)) return self::BAKALARI_UCITELE;
+    else return self::UNKNOWN;
+  }
+  
+  public function import($filename,$settings)
   {
      $fp = fopen($filename, 'r');
      if($fp)
@@ -45,10 +59,40 @@ class FileUserImport extends BaseUserImport
        $firstLine = fgets($fp);
        if ($firstLine)
        {
-         $columnNames = explode(self::$separator,$firstLine);
+         if(substr( $firstLine, 0, 3 ) === $this->bom)  {$firstLine = substr($firstLine, 3);}
+         $columnNames = explode(self::$separator,trim($firstLine));
          switch ($this->detectType($columnNames))
          {
-           case $this->INTERNAL : ;
+           case self::INTERNAL : 
+              while ($line = fgets($fp))
+              {
+                if ($settings->encoding != "UTF-8")
+                  $line = iconv($settings->encoding, "UTF-8", $line);
+                $row = explode($settings->separator,trim($line));
+                if (count($row) == count($columnNames))
+                {
+                  $data = array();
+                  foreach($columnNames as $index => $column) $data[$column] = $row[$index]; 
+                  $this->importRecord($data);                  
+                }
+              }
+              break;
+           case self::BAKALARI_UCITELE : 
+              while ($line = fgets($fp))
+              {
+                if ($settings->encoding != "UTF-8")
+                  $line = iconv($settings->encoding, "UTF-8", $line); 
+                $row = explode($settings->separator,trim($line));
+                if (count($row) == count($columnNames))
+                {
+                  $data = array();
+                  $columnNames = $this->prepareColumnsBakalariUcitele($columnNames);
+                  foreach($columnNames as $index => $column) $data[$column] = $row[$index];
+                  $data = $this->prepareDataBakalariUcitele($data);
+                  $this->importRecord($data);                 
+                }                
+              }
+              break;
            default : throw new DataImportException("Neznámé názvy sloupců.");
          }
        }

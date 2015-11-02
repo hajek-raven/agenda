@@ -21,7 +21,20 @@ class Membership extends Common\GridTableModel
 
 	public function in($user,$group)
 	{
-		$this->query("INSERT INTO " . $this->getTableName() . " (`user_id` ,`group_id`) VALUES ($user, $group)");
+		$sel = $this->query("SELECT * FROM membership WHERE user_id = $user AND group_id = $group")->fetch();
+		if(!$sel) 
+		{
+			$this->query("INSERT INTO " . $this->getTableName() . " (`user_id` ,`group_id`) VALUES ($user, $group)");
+		}
+	}
+	
+	public function inNamedGroup($user,$groupName)
+	{
+		$groupId = $this->query("SELECT id FROM `group` WHERE role_name = \"$groupName\"")->fetch();
+		if ($groupId)
+		{
+			$this->in($user,$groupId->id);
+		}
 	}
 	
 	public function userIsMember($userId)
