@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+{var ajax = $presenter->getParameter('ajax') == 'on'}
+{var $address = explode(":",$presenter->getName())}
+	<title>{if isset($title)}{$title}{else}Agenda SPŠSE v2{/if}</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<link rel="stylesheet" href="{$basePath}/css/defaults.css">
+	<link rel="stylesheet" href="{$basePath}/css/layout.css">
+	<link rel="stylesheet" href="{$basePath}/css/base.css">
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico">
+	<meta name="viewport" content="width=device-width">
+</head>
+
+<body class="{$address[1]|lower}">
+	<header id="site-header">
+	  <div class="container-vertical">
+	    <div class="container-horizontal container-spread" id="site-heading">
+	      <div id="site-title">{if isset($title)}{$title}{else}SPŠSE a VOŠ{/if}</div>
+	      <div class="icons">
+	        <span id="drawer-trigger" class="icon-button menu" data-toggle="tooltip" data-placement="left" title="Rychlá navigace">Navigace</span>
+	        {if $user->isLoggedIn()}<a n:href=":Service:Sign:out" class="sign-out icon-button" data-toggle="tooltip" data-placement="left" title="Odhlášení uživatele">Odhlášení</a>{else}<a n:href=":Service:Sign:in" class="sign-in icon-button" data-toggle="tooltip" data-placement="left" title="Přihlášení stávajících a registrace nových uživatelů">Přihlášení</a>{/if}
+		 </div>
+	    </div>
+			{ifset menu}
+	    <div id="local-menu" class="container-horizontal container-spread">
+	      {include menu}
+	    </div>
+			{/ifset}
+	  </div>
+	</header>
+	<div id="content-wrapper">
+		<div id="content">
+			<main>
+ <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+	{include content}
+			</main>
+		</div>
+	</div>
+	<div id="obfuscator"></div>
+	<div id="drawer">
+		<nav>
+			<header>Navigace</header>
+			{if ($user->isAllowed("Activity:Homepage",'default'))}<a n:href="default" class="home">Přehled</a>{/if}
+			{if ($user->isAllowed("Activity:Homepage",'addact'))}<a n:href="addact" class="new">Nová činnost</a>{/if}
+		</nav>		
+		{include '../../templates/globalNavigation.latte'}
+	</div>
+	{block scripts}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script src="{$basePath}/js/main.js"></script>
+	{/block}
+	<footer id="site-footer">
+		{include '../../templates/globalFooter.latte'}
+	</footer>
+</body>
+</html>

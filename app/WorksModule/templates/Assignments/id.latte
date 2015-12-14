@@ -25,7 +25,7 @@
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href="default">Zpět</a>
-	{if $editable}<a n:href="edit $work->id" class="edit icon-button">Editace</a>{/if}
+	<a class="back icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+	{if $editable}<a n:href="edit $work->id" class="edit icon-button" data-toggle="tooltip" data-placement="right" title="Editace zadání">Editace</a>{/if}
 </nav>
 {/block}

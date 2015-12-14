@@ -5,7 +5,7 @@
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href=":Dashboard:Homepage:default">Zpět</a>
-	<a class="new icon-button" n:href="add" role="button">Nový</a>
+	<a class="back icon-button" n:href="Homepage:default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+	{if ($user->isAllowed("Dashboard:Files",'add'))}<a class="new icon-button" n:href="add" role="button" data-toggle="tooltip" data-placement="right" title="Nahrát nový soubor">Nový</a>{/if}
 </nav>
 {/block}

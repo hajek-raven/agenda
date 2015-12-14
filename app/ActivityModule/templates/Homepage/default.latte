@@ -1,0 +1,14 @@
+{block content}
+<!-- chybi include parent, scripts -->
+<div class="card normal-card">
+{control grid}
+</div>
+{/block}
+{block menu}
+<nav>
+<nav>
+	<a class="home icon-button" n:href=":Front:Homepage:default" data-toggle="tooltip" data-placement="right" title="Na titulní stránku">Zpět</a>
+	{if ($user->isAllowed("Activity:Homepage",'addact'))}<a class="new icon-button" n:href="addact" data-toggle="tooltip" data-placement="right" title="Nová činnost">Nová</a>{/if}
+</nav>
+</nav>
+{/block}

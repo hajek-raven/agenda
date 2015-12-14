@@ -18,8 +18,6 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 	public $imapUserModel;
 	/** @var \App\Model\Membership @inject */
 	public $membershipModel;
-	/** @var \App\Model\Import\FileUserImport @inject */
-	public $FileUserImport;
 	/** @var \App\Forms\UserFormFactory @inject */
 	public $formFactory;
 	/** @var \App\Forms\PasswordFormFactory @inject */
@@ -28,8 +26,6 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
 	public $usernameFormFactory;
 	/** @var \App\Forms\SelectLineFormFactory @inject */
 	public $selectFormFactory;
-	/** @var \App\Forms\ImportFileFormFactory @inject */
-	public $uploadFormFactory;
 
 	public function __construct()
 	{
@@ -483,61 +479,6 @@ class UsersPresenter extends \App\Presenters\SecuredGridPresenter
         	$form["selection"]->setItems($this->membershipModel->userIsNotMemberOfGroupsAsArray($values->id));
 			$form["selection"]->setValue(null);
 			$this->invalidateControl('addMembershipForm');
-		}
-	}
-	
-	public function actionExportAll()
-	{
-		$fileData = $this->filesModel->reserveStorage($this->user->id,"Export uzivatelu ".date("c").".csv");
-		$this->FileUserImport->exportAll($fileData["filename"]);
-		$this->downloadFile($fileData["id"]);
-		$this->redirect('default');
-	}
-	
-	public function actionImport()
-	{
-		$this->setTitle("Import dat o uživatelích");
-	}
-	
-	public function importFormSucceeded($form,$values)
-	{
-		unset($values->id);
-		try
-		{
-			$file = $values->file;
-			if ($file->isOk)
-			{
-				$mime = $file->getContentType();
-				$name = $file->getName();
-				$safe = $file->getSanitizedName();
-				$size = $file->getSize();
-				$extension = \Nette\Utils\Strings::lower(pathinfo($name, PATHINFO_EXTENSION));
-				if (($mime == "text/plain") && ($extension == "csv"))
-				{
-					try
-					{
-						$type = $this->FileUserImport->import($file->getTemporaryFile(),$values);		
-						$this->flashMessage("Proběhl import dat ze souboru.","success");
-					}
-					catch (DataImportException $ex)
-					{
-						$this->flashMessage("Nebyla rozpoznána struktura dat: " . $ex->getMessage(),"danger");
-					}
-				}
-				else
-				{
-					$this->flashMessage("Nesprávný ty souboru. K importu dat je nutné použít soubor typu .csv","danger");
-				}
-			}
-			
-		}
-		catch (Exception $e)
-		{
-			$this->flashMessage("Během nahrávání souboru došlo k chybě.","danger");
-		}
-		//finally
-		{
-			//$this->redirect("default");
 		}
 	}
 }

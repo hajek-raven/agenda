@@ -5,7 +5,7 @@
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href=":Dashboard:Homepage:default">Zpět</a>
-	{if ($user->isAllowed("Dashboard:Groups",'add'))}<a class="new icon-button" n:href="add" role="button">Nová</a>{/if}
+	<a class="back icon-button" n:href=":Dashboard:Homepage:default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+	{if ($user->isAllowed("Dashboard:Groups",'add'))}<a class="new icon-button" n:href="add" role="button" data-toggle="tooltip" data-placement="right" title="Vytvoření nové skupiny">Nová</a>{/if}
 </nav>
 {/block}

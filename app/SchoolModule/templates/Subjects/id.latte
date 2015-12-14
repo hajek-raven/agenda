@@ -1,0 +1,22 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<div>
+<header>
+<h1>Obecná data</h1>
+</header>
+<dl>
+	<dt>Název</dt>
+	<dd>{$data->name}</dd>
+	<dt>Zkratka</dt>
+	<dd>{$data->shortname}</dd>
+</dl>
+</div>
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+</nav>
+{/block}

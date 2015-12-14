@@ -1,0 +1,30 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card appact">
+<div>
+<dl>
+	<dt>Jméno</dt>
+	<dd>{$record->fn} {$record->ln}</dd>
+	<dt>Název</dt>
+	<dd>{$record->name}</dd>
+	<dt>Popis</dt>
+	<dd>{$record->description}</dd>
+	<dt>PK</dt>
+	<dd>{$record->pk}</dd>
+	<dt>Čas (m)</dt>
+	<dd>{$record->timeInM}</dd>
+		{control approvalForm}
+</dl>
+
+</div>
+</section>
+</div>
+
+
+
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default">Zpět</a>
+</nav>
+{/block}

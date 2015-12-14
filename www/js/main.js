@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip();
 	$("#drawer-trigger").click(function(){
 		$("#obfuscator").addClass("visible");
 		$("#drawer").addClass("opened");

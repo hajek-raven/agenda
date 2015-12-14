@@ -59,10 +59,10 @@
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href="default">Zpět</a>
-	{if ($user->isAllowed("Dashboard:Users",'edit'))}<a class="edit icon-button" n:href="edit, $data->id" role="button">Editace</a>{/if}
-	{if ($user->isAllowed("Dashboard:Users",'password'))}<a class="password icon-button" n:href="password, $data->id" role="button">Lokální&nbsp;heslo</a>{/if}
-	{if ($user->isAllowed("Dashboard:Users",'setImap'))}<a class="password icon-button" n:href="setImap, $data->id" role="button">Školní&nbsp;účet</a>{/if}
-	{if ($user->isAllowed("Dashboard:Users",'removeImap'))}<a class="delete icon-button" n:href="removeImap, $data->id" role="button">Zrušení</a>{/if}
+	<a class="back icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+	{if ($user->isAllowed("Dashboard:Users",'edit'))}<a class="edit icon-button" n:href="edit, $data->id" role="button" data-toggle="tooltip" data-placement="right" title="Editace vlastností záznamu">Editace</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'password'))}<a class="password icon-button" n:href="password, $data->id" role="button" data-toggle="tooltip" data-placement="right" title="Změna lokálního hesla">Lokální&nbsp;heslo</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'setImap'))}<a class="password icon-button" n:href="setImap, $data->id" role="button" data-toggle="tooltip" data-placement="right" title="Nastavení přihlašování přes školní účet">Školní&nbsp;účet</a>{/if}
+	{if ($user->isAllowed("Dashboard:Users",'removeImap'))}<a class="delete icon-button" n:href="removeImap, $data->id" role="button" data-toggle="tooltip" data-placement="right" title="Zrušení přihlašování přes školní účet">Zrušení</a>{/if}
 </nav>
 {/block}

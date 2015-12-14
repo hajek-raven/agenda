@@ -34,6 +34,16 @@ class Acl extends Permission
         $this->addResource('Works:Sets');
         $this->addResource('Works:Ideas');
         $this->addResource('Works:Assignments');
+        $this->addResource('School:Homepage');
+        $this->addResource('School:Classes');
+        $this->addResource('School:Students');
+        $this->addResource('School:Teachers');
+        $this->addResource('School:Subjects');
+        $this->addResource('School:Groups');
+        $this->addResource('School:Import');
+        $this->addResource('Delivery:Homepage');
+        $this->addResource('Practice:Homepage');
+        $this->addResource('Activity:Homepage');
 
         // privileges
         $this->allow('guest', array('Front:Homepage','Service:Sign', "Service:Error"), Permission::ALL);

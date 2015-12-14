@@ -34,9 +34,9 @@
 <tr><td>{$g->order}</td><td>{$g->description}</td>
 {if $editable}
  <td>
-  <a n:href="deleteGoal! $idea->id, 'order' => $g->order" class="ajax delete icon-button">Odstranit</a>
-	{if !$iterator->isFirst()}<a n:href="upGoal! $idea->id, 'order' => $g->order" class="ajax up icon-button">Nahoru</a>{/if}
-	{if !$iterator->isLast()}<a n:href="downGoal! $idea->id, 'order' => $g->order" class="ajax down icon-button">Dolu</a>{/if}
+  <a n:href="deleteGoal! $idea->id, 'order' => $g->order" class="ajax delete icon-button" data-toggle="tooltip" data-placement="bottom" title="Odstranit">Odstranit</a>
+	{if !$iterator->isFirst()}<a n:href="upGoal! $idea->id, 'order' => $g->order" class="ajax up icon-button" data-toggle="tooltip" data-placement="bottom" title="Posunout nahoru">Nahoru</a>{/if}
+	{if !$iterator->isLast()}<a n:href="downGoal! $idea->id, 'order' => $g->order" class="ajax down icon-button" data-toggle="tooltip" data-placement="bottom" title="Posunout dolů">Dolu</a>{/if}
 	</td>
  {/if}
 </tr>
@@ -54,8 +54,8 @@
 	 <input n:name=description class="form-control fill-width">
 	 <input n:name=id type=hidden>
 	 <div class="icons">
-	  <input class="ajax new icon-button" type=submit n:name=send>
-	  <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button">Obnovit</a>
+	  <input class="ajax new icon-button" type=submit n:name=send data-toggle="tooltip" data-placement="right" title="Přidat">
+	  <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button" data-toggle="tooltip" data-placement="right" title="Znovunačíst data">Obnovit</a>
 	 </div>
 	</form>
 	{/snippet}
@@ -75,9 +75,9 @@
 <tr><td>{$o->order}</td><td>{$o->description}</td>
 {if $editable}
 <td>
- <a n:href="deleteOutline! $idea->id, 'order' => $o->order" class="ajax delete icon-button">Odstranit</a>
- {if !$iterator->isFirst()}<a n:href="upOutline! $idea->id, 'order' => $o->order" class="ajax up icon-button">Nahoru</a>{/if}
- {if !$iterator->isLast()}<a n:href="downOutline! $idea->id, 'order' => $o->order" class="ajax down icon-button">Dolu</a>{/if}
+ <a n:href="deleteOutline! $idea->id, 'order' => $o->order" class="ajax delete icon-button" data-toggle="tooltip" data-placement="bottom" title="Odstranit">Odstranit</a>
+ {if !$iterator->isFirst()}<a n:href="upOutline! $idea->id, 'order' => $o->order" class="ajax up icon-button" data-toggle="tooltip" data-placement="bottom" title="Posunout nahoru">Nahoru</a>{/if}
+ {if !$iterator->isLast()}<a n:href="downOutline! $idea->id, 'order' => $o->order" class="ajax down icon-button" data-toggle="tooltip" data-placement="bottom" title="Posunout dolů">Dolu</a>{/if}
  </td>
 {/if}
 </tr>
@@ -95,8 +95,8 @@
 	<input n:name=description class="fill-width form-control">
 	<input n:name=id type=hidden>
 	<div class="icons">
-	 <input class="ajax new icon-button" type=submit n:name=send>
-	 <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button">Obnovit</a>
+	 <input class="ajax new icon-button" type=submit n:name=send data-toggle="tooltip" data-placement="right" title="Přidat">
+	 <a n:href="refreshGoal! $idea->id" class="ajax refresh icon-button" data-toggle="tooltip" data-placement="right" title="Znovunačíst data">Obnovit</a>
 	</div>
 	</form>
 	{/snippet}
@@ -107,9 +107,9 @@
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href="default">Zpět</a>
+	<a class="back icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
 	{if $editable}
-	<a n:href="edit $idea->id" class="edit icon-button">Editace</a>
+	<a n:href="edit $idea->id" class="edit icon-button" data-toggle="tooltip" data-placement="right" title="Editace námětu">Editace</a>
 	{/if}
 </nav>
 {/block}

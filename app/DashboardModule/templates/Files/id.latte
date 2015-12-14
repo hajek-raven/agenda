@@ -24,22 +24,15 @@
 	<dt>Zámek</dt>
 	<dd>{if $data->locked}Se souborem není možné manipulovat.{else}Se souborem lze manipulovat.{/if}</dd>
 </dl>
-<footer>
-	<div class="icons">
-{if ($user->isInRole("administrator") || $user->id == $data->user_id || $data->public)}
-	  <a n:href="download $data->id" class="download icon-button">Uložení</a>
-		<a n:href="refreshFileData $data->id" class="refresh icon-button">Aktualizovat data ze souboru</a>
-{/if}
-{if ($user->isInRole("administrator") || (($data->locked == 0) && $user->id == $data->user_id))}
-		<a n:href="edit $data->id" class="edit icon-button">Editace</a>
-{/if}
-</div>
-</footer>
 </section>
 </div>
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href="default">Zpět</a>
+	<a class="back icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+	{if ($user->isInRole("administrator") || $user->id == $data->user_id || $data->public)}<a n:href="download $data->id" class="download icon-button" data-toggle="tooltip" data-placement="right" title="Uložit soubor">Uložení</a>
+	<a n:href="refreshFileData $data->id" class="refresh icon-button" data-toggle="tooltip" data-placement="right" title="Aktualizovat data ze souboru">Aktualizovat data ze souboru</a>
+	{/if}
+	{if ($user->isInRole("administrator") || (($data->locked == 0) && $user->id == $data->user_id))}<a n:href="edit $data->id" class="edit icon-button" data-toggle="tooltip" data-placement="right" title="Editace vlastností souboru">Editace</a>{/if}	
 </nav>
 {/block}

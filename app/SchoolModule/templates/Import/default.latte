@@ -1,0 +1,60 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<div>
+<header>
+<h1>Připojení na datový zdroj</h1>
+</header>
+<dl>
+	<dt>Adresa</dt>
+	<dd>{if $dataSource}{$dataSource}{else}Žádný zdroj dat není nastaven{/if}</dd>
+</dl>
+</section>
+{if $dataSource}
+<section class="card normal-card">
+<div>
+<header>
+<h1>Import dat</h1>
+</header>
+<p>Importujte data v doporučeném (a naznačeném) pořadí - tedy zleva doprava.</p>
+<p>
+<a n:href="ImportAll" type="button" class="btn btn-primary">Import veškerých dat</a>
+<a n:href="ImportSubjects" type="button" class="btn btn-default">Vyučovací předměty</a>
+<a n:href="ImportTeachers" type="button" class="btn btn-default">Učitelé</a>
+<a n:href="ImportClasses" type="button" class="btn btn-default">Třídy</a>
+<a n:href="ImportStudents" type="button" class="btn btn-default">Studenti</a>
+<a n:href="ImportGroups" type="button" class="btn btn-default">Skupiny</a>
+<a n:href="ImportLoads" type="button" class="btn btn-default">Úvazky</a>
+</p>
+</section>
+{if ($user->isAllowed("School:Import",'dataSource'))}
+<section class="card normal-card">
+<div>
+<header>
+<h1>Řízení datového zdroje</h1>
+<p>Import veškerých dat z bakalářů do datového zdroje je velmi časově náročná operace. Provádějte ji v době minimální zátěže Bakalářů i této aplikace. I tak se obrňte velkou trpělivostí, buďte připravení na to, že celý proces může trvat i deset minut.</p>
+</header>
+<p>
+<a n:href="RefreshAll" type="button" class="btn btn-danger">Import veškerých dat</a>
+<a n:href="RefreshSubjects" type="button" class="btn btn-default">Vyučovací předměty</a>
+<a n:href="RefreshTeachers" type="button" class="btn btn-default">Učitelé</a>
+<a n:href="RefreshClasses" type="button" class="btn btn-default">Třídy</a>
+<a n:href="RefreshStudents" type="button" class="btn btn-default">Studenti</a>
+<a n:href="RefreshGroups" type="button" class="btn btn-default">Skupiny</a>
+<a n:href="RefreshLoads" type="button" class="btn btn-default">Úvazky</a>
+</p>
+</section>
+{/if}
+{/if}
+</div>
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="Homepage:default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+</nav>
+{/block}
+{block scripts}
+{include parent}
+{/block}

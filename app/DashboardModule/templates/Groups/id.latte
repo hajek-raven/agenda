@@ -57,7 +57,7 @@
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href="default">Zpět</a>
-	{if ($editable)}<a class="edit icon-button" n:href="edit, $data->id" role="button">Editace</a>{/if}
+	<a class="back icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+	{if ($editable)}<a class="edit icon-button" n:href="edit, $data->id" role="button" data-toggle="tooltip" data-placement="right" title="Editace vlastností skupiny">Editace</a>{/if}
 </nav>
 {/block}

@@ -1,0 +1,33 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<div>
+<header>
+<h1>Obdržené zprávy</h1>
+</header>
+<div n:foreach="$messages as $message" class="alert alert-{$message->kind}">{$message->text}</div>
+</div>
+</section>
+{if $reports}
+<section class="card normal-card">
+<div>
+<header>
+<h1>Průběh</h1>
+</header>
+<table class="table">
+{foreach $reports as $rep}
+<tr><td>{$rep}</td></tr>
+{/foreach}
+</table>
+</div>
+{/if}
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="Import:default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+</nav>
+{/block}
+{block scripts}
+{include parent}
+{/block}

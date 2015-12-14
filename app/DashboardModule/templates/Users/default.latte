@@ -5,10 +5,8 @@
 {/block}
 {block menu}
 <nav>
-	<a class="back icon-button" n:href="Homepage:default">Zpět</a>
-	<a class="new icon-button" n:href="add">Nový</a>
-	{if ($user->isAllowed("Dashboard:Users",'exportAll'))}<a class="download icon-button" n:href="exportAll" role="button">Export</a>{/if}
-	{if ($user->isAllowed("Dashboard:Users",'import'))}<a class="upload icon-button" n:href="import" role="button">Import</a>{/if}
+	<a class="back icon-button" n:href="Homepage:default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+	<a class="new icon-button" n:href="add" data-toggle="tooltip" data-placement="right" title="Vytvoření nového uživatele">Nový</a>
 </nav>
 {/block}
 {block scripts}

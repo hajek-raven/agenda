@@ -1,0 +1,73 @@
+{block content}
+<div class="menu-cards">
+{if ($user->isAllowed("School:Subjects",'default'))}
+<div class="card normal-card">
+ <a n:href="Subjects:default">
+  <div class="big-icon file">&nbsp;</div>
+  <div class="big-number">?</div>
+ </a>
+  <footer>
+  <div class="area-description">Předměty</div>
+  <div><a n:href="Subjects:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+{if ($user->isAllowed("School:Groups",'default'))}
+<div class="card normal-card">
+ <a n:href="Groups:default">
+  <div class="big-icon group">&nbsp;</div>
+  <div class="big-number">?</div>
+ </a>
+  <footer>
+  <div class="area-description">Skupiny</div>
+  <div><a n:href="Groups:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+{if ($user->isAllowed("School:Students",'default'))}
+<div class="card normal-card">
+ <a n:href="Students:default">
+  <div class="big-icon user">&nbsp;</div>
+  <div class="big-number">?</div>
+ </a>
+  <footer>
+  <div class="area-description">Studenti</div>
+  <div><a n:href="Students:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+{if ($user->isAllowed("School:Classes",'default'))}
+<div class="card normal-card">
+ <a n:href="Classes:default">
+  <div class="big-icon group">&nbsp;</div>
+  <div class="big-number">?</div>
+ </a>
+  <footer>
+  <div class="area-description">Třídy</div>
+  <div><a n:href="Classes:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+{if ($user->isAllowed("School:Teachers",'default'))}
+<div class="card normal-card">
+ <a n:href="Teachers:default">
+  <div class="big-icon user">&nbsp;</div>
+  <div class="big-number">?</div>
+ </a>
+  <footer>
+  <div class="area-description">Učitelé</div>
+  <div><a n:href="Teachers:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="home icon-button" n:href=":Front:Homepage:default" data-toggle="tooltip" data-placement="right" title="Na titulní stránku">Zpět</a>
+	{if ($user->isAllowed("School:Import",'default'))}<a class="upload icon-button" n:href="Import:default" data-toggle="tooltip" data-placement="right" title="Import dat z externího zdroje">Import</a>{/if}
+</nav>
+{/block}
+{block scripts}
+{include parent}
+{/block}

@@ -6,9 +6,12 @@
 {control signInForm}
 	<footer>
 	 <div>
-		<a n:href="Sign:up" class="btn btn-default">Registrace</a>
-		<a n:href="Sign:password" class="btn btn-default">Obnovení hesla</a>
-	 </div>	
+		<a n:href="Sign:up" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Vytvoření nového lokálního účtu">Registrace</a>
+		<a n:href="Sign:password" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Získání zapomenutého hesla k&nbsp;lokálnímu účtu">Obnovení hesla</a>
+	 </div>
+	 <div class="icons">
+			<a class="microsoft icon-button bordered" n:href="Sign:microsoft" data-toggle="tooltip" data-placement="bottom" title="Registrace/přihlášení prostřednictvím účtu Microsoft (testovací rozhraní)">Microsoft</a>
+		</div>	
 	</footer>
 </div>
 

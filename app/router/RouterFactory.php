@@ -24,7 +24,10 @@ class RouterFactory
 		$router[] = new Route('sign/<action>[/<id>]', array("module" => "Service", 'presenter' => 'Sign','action' => 'default'));
 		$router[] = new Route('dashboard/<presenter>/<action>[/<id>]', array("module" => "Dashboard", 'presenter' => 'Homepage','action' => 'default'));
 		$router[] = new Route('works/<presenter>/<action>[/<id>]', array("module" => "Works", 'presenter' => 'Homepage','action' => 'default'));
+		$router[] = new Route('school/<presenter>/<action>[/<id>]', array("module" => "School", 'presenter' => 'Homepage','action' => 'default'));
+		$router[] = new Route('activity/<presenter>/<action>[/<id>]', array("module" => "Activity", 'presenter' => 'Homepage','action' => 'default'));
 		$router[] = new Route('<presenter>/<action>[/<id>]', array("module" => "Front", 'presenter' => 'Homepage','action' => 'default'));
+
 		return $router;
 	}
 

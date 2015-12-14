@@ -12,18 +12,6 @@
   </footer>
 </div>
 {/if}
-{if ($user->isAllowed("Works:Assignments",'default'))}
-<div class="card normal-card">
- <a n:href="Assignments:default">
-  <div class="big-icon graduate">&nbsp;</div>
-  <div class="big-number">{$assignments->total}</div>
-</a>
-  <footer>
-  <div class="area-description">Zadání</div>
-  <div><a n:href="Assignments:default" class="icon-button bordered right">Detail</a></div>
-  </footer>
-</div>
-{/if}
 {if ($user->isAllowed("Works:Sets",'default'))}
 <div class="card normal-card">
  <a n:href="Sets:default">
@@ -36,11 +24,23 @@
   </footer>
 </div>
 {/if}
+{if ($user->isAllowed("Works:Assignments",'default'))}
+<div class="card normal-card">
+ <a n:href="Assignments:default">
+  <div class="big-icon graduate">&nbsp;</div>
+  <div class="big-number">{$assignments->total}</div>
+</a>
+  <footer>
+  <div class="area-description">Zadání</div>
+  <div><a n:href="Assignments:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
 </div>
 {/block}
 {block menu}
 <nav>
-	<a class="home icon-button" n:href=":Front:Homepage:default">Zpět</a>
+	<a class="home icon-button" n:href=":Front:Homepage:default" data-toggle="tooltip" data-placement="right" title="Na titulní stránku">Zpět</a>
 </nav>
 {/block}
 {block scripts}

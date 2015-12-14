@@ -139,8 +139,8 @@ div.big-icon {
 }
 
 .icon-button:hover, .table .btn-mini:hover {background-color: #eee;}
-.in, .btn-mini.grid-action-in {background-image: url("../images/icons/black/login.svg");}
-.out, .btn-mini.grid-action-out {background-image: url("../images/icons/black/logout.svg");}
+.sign-in, .btn-mini.grid-action-in {background-image: url("../images/icons/black/login.svg");}
+.sign-out, .btn-mini.grid-action-out {background-image: url("../images/icons/black/logout.svg");}
 .dashboard {background-image: url("../images/icons/black/gear.svg");}
 .leave {background-image: url("../images/icons/black/off.svg");}
 .id, .table .btn-mini.grid-action-id {background-image: url("../images/icons/black/detail.svg");}
@@ -169,6 +169,7 @@ div.big-icon {
 .up {background-image: url("../images/icons/black/up.svg");}
 .down {background-image: url("../images/icons/black/down.svg");}
 .clone, .table .btn-mini.grid-action-clone {background-image: url("../images/icons/black/split.svg");}
+.act_default {background-image: url("../images/icons/black/act_work.png");}
 /* Cards */
 .card {
 	display: flex;
