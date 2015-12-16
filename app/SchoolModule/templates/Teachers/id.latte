@@ -1,0 +1,35 @@
+{block content}
+<div class="data-cards">
+<section class="card normal-card">
+<div>
+<header>
+<h1>Obecná data</h1>
+</header>
+<dl>
+	<dt>Jméno a příjmení</dt>
+	<dd>{if $data->title}{$data->title} {/if}{$data->firstname} {$data->lastname}</dd>
+	<dt>Zkratka</dt>
+	<dd>{$data->shortname}</dd>
+	<dt>Přihlašovací jméno do školní sítě</dt>
+	<dd>{$data->network_login}</dd>
+</dl>
+<header>
+<h1>Kontaktní údaje</h1>
+</header>
+<dl>
+	<dt>Email</dt>
+	<dd>{$data->email}</dd>
+	<dt>Školní telefonní linka</dt>
+	<dd>{$data->work_phone}</dd>
+	<dt>Telefon</dt>
+	<dd>{$data->phone}</dd>
+</dl>
+</div>
+</section>
+</div>
+{/block}
+{block menu}
+<nav>
+	<a class="back icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Zpět">Zpět</a>
+</nav>
+{/block}

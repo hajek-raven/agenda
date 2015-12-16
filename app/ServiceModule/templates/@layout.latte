@@ -15,42 +15,44 @@
 </head>
 
 <body class="{$address[1]|lower}">
-	<header id="site-header">
-	  <div class="container-vertical">
-	    <div class="container-horizontal container-spread" id="site-heading">
-	      <div id="site-title">{if isset($title)}{$title}{else}SPŠSE a VOŠ{/if}</div>
-	      <div class="icons">
-	        <span id="drawer-trigger" class="icon-button menu" data-toggle="tooltip" data-placement="left" title="Rychlá navigace">Navigace</span>
-	        {if $user->isLoggedIn()}<a n:href=":Service:Sign:out" class="sign-out icon-button" data-toggle="tooltip" data-placement="left" title="Odhlášení uživatele">Odhlášení</a>{else}<a n:href=":Service:Sign:in" class="sign-in icon-button" data-toggle="tooltip" data-placement="left" title="Přihlášení stávajících a registrace nových uživatelů">Přihlášení</a>{/if}
-		 </div>
-	    </div>
-			{ifset menu}
-	    <div id="local-menu" class="container-horizontal container-spread">
-	      {include menu}
-	    </div>
-			{/ifset}
-	  </div>
-	</header>
-	<div id="content-wrapper">
-		<div id="content" class="limited-width">
-			<main>
- <div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
-	{include content}
-			</main>
+	<div id="page">
+		<header id="site-header">
+		<div class="container-vertical">
+			<div class="container-horizontal container-spread" id="site-heading">
+			<div id="site-title">{if isset($title)}{$title}{else}SPŠSE a VOŠ{/if}</div>
+			<div class="icons">
+				<span id="drawer-trigger" class="icon-button menu" data-toggle="tooltip" data-placement="left" title="Rychlá navigace">Navigace</span>
+				{if $user->isLoggedIn()}<a n:href=":Service:Sign:out" class="sign-out icon-button" data-toggle="tooltip" data-placement="left" title="Odhlášení uživatele">Odhlášení</a>{else}<a n:href=":Service:Sign:in" class="sign-in icon-button" data-toggle="tooltip" data-placement="left" title="Přihlášení stávajících a registrace nových uživatelů">Přihlášení</a>{/if}
+			</div>
+			</div>
+				{ifset menu}
+			<div id="local-menu" class="container-horizontal container-spread">
+			{include menu}
+			</div>
+				{/ifset}
 		</div>
-	</div>
-	<div id="obfuscator"></div>
-	<div id="drawer">
-		{include '../../templates/globalNavigation.latte'}
-	</div>
-	{block scripts}
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-	<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-	<script src="{$basePath}/js/main.js"></script>
-	{/block}
-	<footer id="site-footer">
-		{include '../../templates/globalFooter.latte'}
-	</footer>
+		</header>
+		<div id="content-wrapper">
+			<div id="content" class="limited-width">
+				<main>
+	<div n:foreach="$flashes as $flash" class="alert alert-{$flash->type}">{$flash->message}</div>
+		{include content}
+				</main>
+			</div>
+		</div>
+		<div id="obfuscator"></div>
+		<div id="drawer">
+			{include '../../templates/globalNavigation.latte'}
+		</div>
+		{block scripts}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script src="//nette.github.io/resources/js/netteForms.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<script src="{$basePath}/js/main.js"></script>
+		{/block}
+		<footer id="site-footer">
+			{include '../../templates/globalFooter.latte'}
+		</footer>
+	</div>	
 </body>
 </html>

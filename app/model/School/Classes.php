@@ -1,20 +1,20 @@
 <?php
 namespace App\Model\School;
 
-class Teachers extends \App\Model\Common\GridTableModel
+class Classes extends \App\Model\Common\GridTableModel
 {
 	public function __construct(\DibiConnection $connection, \Nette\Security\User $user)
  	{
-		parent::__construct($connection, "sch_teacher");
+		parent::__construct($connection, "sch_class");
 		$this->getSelection()->removeClause("SELECT");
-		$this->getSelection()->select("sch_teacher.*, user.firstname, user.lastname, user.title, user.title_after, user.email, user.phone")
-			->join("user")->on("sch_teacher.user_id = user.id");
-		$this->setPrimaryKey("sch_teacher.user_id");	
+		$this->getSelection()->select("sch_class.*, user.firstname AS teacher_firstname, user.lastname AS teacher_lastname")
+			->leftJoin("user")->on("sch_class.teacher_id = user.id");
+		$this->setPrimaryKey("sch_class.id");	
 	}
 	
 	public function existsBakalari($code)
 	{
-		$sql = "SELECT user_id FROM " . $this->getTableName() . " WHERE `bakalari_code` = '$code'";
+		$sql = "SELECT id FROM " . $this->getTableName() . " WHERE `bakalari_code` = '$code'";
 		$data = $this->query($sql)->fetch();
 		return $data;
 	}
