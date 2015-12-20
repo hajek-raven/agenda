@@ -13,6 +13,8 @@ class ClassesPresenter extends \App\Presenters\SecuredPresenter
 {
  	/** @var \App\Model\School\Classes @inject */
 	public $model;
+ 	/** @var \App\Model\School\Students @inject */
+	public $studentsModel;
 
 	public function __construct()
 	{
@@ -32,6 +34,17 @@ class ClassesPresenter extends \App\Presenters\SecuredPresenter
 	$grid->addActionHref("id","Detail")->setPrimaryKey("id");
     return $grid;
 	}
+	
+	protected function createComponentStudentsGrid($name)
+	{
+  	$grid = new \App\Grids\baseGrid($this, $name);
+	$grid->setDefaultPerPage(50);
+	$grid->addColumnText('firstname', 'Jméno')->setSortable()->setFilterText();
+	$grid->addColumnText('lastname', 'Příjmení')->setSortable()->setFilterText();
+	$grid->addColumnText('catalog_number', 'Číslo')->setSortable();
+	$grid->addActionHref("id","Detail","Students:id")->setPrimaryKey("user_id");
+    return $grid;
+	}
 
 	public function renderDefault()
 	{
@@ -42,5 +55,7 @@ class ClassesPresenter extends \App\Presenters\SecuredPresenter
 		$data = $this->model->get($id);
 		$this->setTitle("Třída " . $data->shortname);
 		$this->template->data = $data;
+		$studentsGrid = $this["studentsGrid"];
+		$studentsGrid->setModel($this->studentsModel->getSelection()->where(array("class_id" => $id))->orderBy("catalog_number"));
 	}
 }

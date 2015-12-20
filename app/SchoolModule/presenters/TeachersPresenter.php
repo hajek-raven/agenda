@@ -28,6 +28,7 @@ class TeachersPresenter extends \App\Presenters\SecuredPresenter
 	$grid->addColumnText('firstname', 'Jméno')->setSortable()->setFilterText();
 	$grid->addColumnText('lastname', 'Příjmení')->setSortable()->setFilterText();
 	$grid->addColumnText('title_after', 'Titul')->setSortable()->setFilterText();
+	$grid->addColumnText('gender', 'Pohlaví')->setSortable()->setReplacement($grid::$genderReplacements)->setFilterSelect($grid::$genderFilters);
 	$grid->addColumnText('shortname', 'Zkratka')->setSortable()->setFilterText();
 	$grid->addColumnText('email', 'Email')->setSortable()->setFilterText();
 	$grid->addColumnText('work_phone', 'Linka')->setSortable()->setFilterText();

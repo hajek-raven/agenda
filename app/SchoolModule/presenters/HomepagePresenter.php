@@ -22,9 +22,11 @@ class HomepagePresenter extends \App\Presenters\SecuredPresenter
 
 	public function renderDefault()
 	{
-		//$this->template->users = $this->model->query("SELECT count(*) as total FROM user")->fetch();
-		//$this->template->groups = $this->model->query("SELECT count(*) as total FROM `group`")->fetch();
-		//$this->template->files = $this->model->query("SELECT count(*) as total FROM `file`")->fetch();
+		$this->template->subjects = $this->model->query("SELECT count(*) as total FROM sch_subject")->fetch();
+		$this->template->groups = $this->model->query("SELECT count(*) as total FROM `sch_group`")->fetch();
+		$this->template->teachers = $this->model->query("SELECT count(*) as total FROM `sch_teacher`")->fetch();
+		$this->template->students = $this->model->query("SELECT count(*) as total FROM `sch_student`")->fetch();
+		$this->template->classes = $this->model->query("SELECT count(*) as total FROM `sch_class`")->fetch();
 	}
 
 }
