@@ -1,0 +1,71 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# http://nette.org/security-warning
+#
+parameters:
+	database:
+		driver: mysql
+		host: #host
+		dbname: #db
+		user: #user
+		password: #pss
+
+extensions:
+	dibi: DibiNette21Extension
+
+mail:
+	smtp: true
+	host: smtp.gmail.com
+	port: 465
+	secure: ssl
+	username: #mail
+	timeout: 30
+
+php:
+	date.timezone: Europe/Prague
+
+application:
+	errorPresenter: Service:Error
+	mapping:
+		*: App\*Module\Presenters\*Presenter
+
+session:
+	expiration: 14 days
+
+dibi:
+	host: %database.host%
+	database: %database.dbname%
+	username: %database.user%
+	password: %database.password%
+	lazy: TRUE
+	profiler: true
+
+services:
+	- App\Model\Authenticator\LocalAuthenticator
+	authorizator:
+		class: Acl
+	- App\Forms\SignFormFactory
+	- App\Forms\UserFormFactory
+	- App\Forms\PasswordFormFactory
+	- App\Forms\GroupFormFactory
+	- App\Forms\SelectUserFormFactory
+	- App\Forms\RegistrationFormFactory
+	- App\Forms\RecoveryFormFactory
+	- App\Forms\Recovery2FormFactory
+	- App\Forms\VerificationFormFactory
+	- App\Forms\UserSettingsFormFactory
+	- App\Forms\UploadFileFormFactory
+	- App\Forms\FileFormFactory
+	- App\Forms\Work\SetFormFactory
+	- App\Forms\Work\AssignmentFormFactory
+	- App\Forms\Work\WorkFormFactory
+	- App\Forms\NewLineFormFactory
+	router: App\RouterFactory::createRouter
+	users: App\Model\Users
+	groups: App\Model\Groups
+	membership: App\Model\Membership
+	workSets: App\Model\Work\Sets
+	workAssignment: App\Model\Work\Assignments
+	workWork: App\Model\Work\Works
+	files:
+		class: App\Model\Files
