@@ -2,10 +2,18 @@ $(document).ready(function(){
 	$('[data-toggle="tooltip"]').tooltip();
 	$("#drawer-trigger").click(function(){
 		$("#obfuscator").addClass("visible");
-		$("#drawer").addClass("opened");
+		$("#nav-drawer").addClass("opened");
 	});
+	$("#my-trigger").click(function(){
+		$("#obfuscator").addClass("visible");
+		$("#my-drawer").addClass("opened");
+	});
+	$("#search-trigger").click(function(){
+		$("#obfuscator").addClass("visible");
+		$("#search-drawer").addClass("opened");
+	});	
 	$("#obfuscator").click(function(){
 		$("#obfuscator").removeClass("visible");
-		$("#drawer").removeClass("opened");
+		$(".drawer").removeClass("opened");
 	});
 });

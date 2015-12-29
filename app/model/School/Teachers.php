@@ -7,8 +7,10 @@ class Teachers extends \App\Model\Common\GridTableModel
  	{
 		parent::__construct($connection, "sch_teacher");
 		$this->getSelection()->removeClause("SELECT");
-		$this->getSelection()->select("sch_teacher.*, user.firstname, user.lastname, user.title, user.title_after, user.email, user.phone, user.gender")
-			->join("user")->on("sch_teacher.user_id = user.id");
+		$this->getSelection()->select("sch_teacher.*, user.firstname, user.lastname, user.title, user.title_after, user.email, user.phone, user.gender, SUM(sch_load.hours) AS hours")
+			->join("user")->on("sch_teacher.user_id = user.id")
+			->leftJoin("sch_load")->on("sch_load.sch_teacher_id = sch_teacher.user_id")
+			->groupBy("sch_teacher.user_id");
 		$this->setPrimaryKey("sch_teacher.user_id");	
 	}
 	

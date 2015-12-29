@@ -148,7 +148,7 @@ class FilesPresenter extends \App\Presenters\SecuredGridPresenter
     		{
     			$this->flashMessage("Během ukládání vlastností souboru došlo k chybě.","danger");
     		}
-    		finally
+    		//finally
     		{
     			$this->redirect("id",$id);
     		}

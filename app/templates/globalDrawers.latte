@@ -1,0 +1,12 @@
+		<div class="drawer right-drawer" id="my-drawer">
+			<header>{$user->getIdentity()->firstname} {$user->getIdentity()->lastname}</header>
+			<nav>			
+				{if ($user->isAllowed("Dashboard:My",'default'))}<a n:href=":Dashboard:My:default" class="cards">Přehled</a>{/if}
+				{if ($user->isAllowed("Dashboard:My",'settings'))}<a n:href=":Dashboard:My:settings" class="settings">Nastavení</a>{/if}
+				<a n:href=":Service:Sign:out" class="sign-out">Odhlášení</a>
+			</nav>
+		</div>
+		<div class="drawer right-drawer" id="search-drawer">
+		<header>Vyhledávání</header>
+		<p>Neimplementováno</p>
+		</div>

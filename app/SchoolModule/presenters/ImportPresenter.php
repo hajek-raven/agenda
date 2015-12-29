@@ -22,8 +22,16 @@ class ImportPresenter extends \App\Presenters\SecuredPresenter
 	public $classesModel;
 	/** @var \App\Model\School\Students @inject */
 	public $studentsModel;
+	/** @var \App\Model\School\Groups @inject */
+	public $groupsModel;
+    /** @var \App\Model\School\GroupMembership @inject */
+	public $membersModel;
+    /** @var \App\Model\School\Loads @inject */
+	public $loadsModel;
 	/** @var \App\Model\Users @inject */
 	public $usersModel;
+	/** @var \App\Model\Membership @inject */
+	public $membershipModel;	
 
 	public function __construct()
 	{
@@ -173,6 +181,14 @@ class ImportPresenter extends \App\Presenters\SecuredPresenter
 			}
 		}
 		$this->teachersModel->query("DELETE FROM login_local WHERE user_id IN(SELECT user_id FROM sch_teacher WHERE invalidated = 1)");
+		$teachersGroupId = $this->membershipModel->getIdfromRole("teacher");
+		if($teachersGroupId)
+		{
+			$this->membershipModel->emptyGroup($teachersGroupId);
+			$reports[] = "Skupina $teachersGroupId byla vyprázdněna.";
+			$this->membershipModel->query("INSERT INTO membership (`user_id`,`group_id`) SELECT user_id,$teachersGroupId FROM `sch_teacher`");
+			$reports[] = "Skupina $teachersGroupId byla naplněna aktuálními učiteli.";
+		}
 		$this->teachersModel->removeUnused();
 		$this->template->reports = $reports;
 		$this->template->messages = $messages;
@@ -209,7 +225,8 @@ class ImportPresenter extends \App\Presenters\SecuredPresenter
 					"name" => $record->name,
 					"shortname" => $record->shortname,
 					"year" => $record->year,
-					"bakalari_code" => $record->bakalari_code
+					"bakalari_code" => $record->bakalari_code,
+					"invalidated" => 0
 				);
 				if ($teacher) $newrec["teacher_id"] = $teacher["user_id"];
 				$this->classesModel->update($recid,$newrec);
@@ -291,7 +308,121 @@ class ImportPresenter extends \App\Presenters\SecuredPresenter
 			}
 		}
 		$this->studentsModel->query("DELETE FROM login_local WHERE user_id IN(SELECT user_id FROM sch_student WHERE invalidated = 1)");
+		$studentsGroupId = $this->membershipModel->getIdfromRole("student");
+		if($studentsGroupId)
+		{
+			$this->membershipModel->emptyGroup($studentsGroupId);
+			$reports[] = "Skupina $studentsGroupId byla vyprázdněna.";
+			$this->membershipModel->query("INSERT INTO membership (`user_id`,`group_id`) SELECT user_id,$studentsGroupId FROM `sch_student`");
+			$reports[] = "Skupina $studentsGroupId byla naplněna aktuálními studenty.";
+		}
 		$this->studentsModel->removeUnused();
+		$this->template->reports = $reports;
+		$this->template->messages = $messages;
+		$this->setView("result");
+	}	
+	
+	// ---- 
+	public function actionImportGroups()
+	{
+		$result = $this->model->importGroups();
+		$data = $result->data;
+		$reports = array();
+		$this->groupsModel->purge();
+		$classConversionTable = array();
+		$classData = $this->classesModel->query("SELECT id, bakalari_code FROM sch_class")->fetchAll();
+		foreach ($classData as $classRecord)
+		{
+			$classConversionTable[$classRecord["bakalari_code"]] = $classRecord["id"];
+		}
+		foreach ($data as $record)
+		{
+			$newid = $this->groupsModel->insert(array(
+				"name" => $record->name,
+				"shortname" => $record->shortname,
+				"bakalari_code" => $record->bakalari_code,
+				"sch_class_id" => $classConversionTable[$record->class_code]
+				));
+			$reports[] = "ADD: Skupina " . $record->name . " byla přidána. ($newid)";
+		}
+        
+        $result2 = $this->model->importMembership();
+        $data = $result2->data;
+        $groupConversionTable = array();
+		$groupData = $this->groupsModel->query("SELECT id, bakalari_code FROM sch_group")->fetchAll();
+		foreach ($groupData as $groupRecord)
+		{
+			$groupConversionTable[$groupRecord["bakalari_code"]] = $groupRecord["id"];
+		}     
+        $studentConversionTable = array();
+		$studentData = $this->studentsModel->query("SELECT user_id, bakalari_code FROM sch_student")->fetchAll();
+		foreach ($studentData as $studentRecord)
+		{
+			$studentConversionTable[$studentRecord["bakalari_code"]] = $studentRecord["user_id"];
+		}
+        foreach ($data as $record)
+		{
+            if (isset($studentConversionTable[$record->student_code]) && isset($groupConversionTable[$record->group_code]))
+            {
+                $this->membersModel->dumbInsert(array(
+                    "user_id" => $studentConversionTable[$record->student_code],
+                    "sch_group_id" => $groupConversionTable[$record->group_code]
+                    ));                
+            }
+            else 
+            {
+                $reports[] = "ERROR: Nekonzistentní data [" . $record->student_code . ", " . $record->group_code . "]";
+            }
+		}      
+        $messages = array_merge($result->messages,$result2->messages);
+		$this->template->reports = $reports;
+		$this->template->messages = $messages;
+		$this->setView("result");
+	}
+	
+	public function actionImportLoads()
+	{
+		$result = $this->model->importLoads();
+		$data = $result->data;
+		$messages = $result->messages;
+		$reports = array();
+		$this->loadsModel->purge();
+		$subjectConversionTable = array();
+		$subjectsData = $this->subjectsModel->query("SELECT id, bakalari_code FROM sch_subject")->fetchAll();
+		foreach ($subjectsData as $subjectRecord)
+		{
+			$subjectConversionTable[$subjectRecord["bakalari_code"]] = $subjectRecord["id"];
+		}
+		$teacherConversionTable = array();
+		$teacherData = $this->teachersModel->query("SELECT user_id, bakalari_code FROM sch_teacher")->fetchAll();
+		foreach ($teacherData as $teacherRecord)
+		{
+			$teacherConversionTable[$teacherRecord["bakalari_code"]] = $teacherRecord["user_id"];
+		}    
+		$groupConversionTable = array();
+		$groupData = $this->groupsModel->query("SELECT id, bakalari_code FROM sch_group")->fetchAll();
+		foreach ($groupData as $groupRecord)
+		{
+			$groupConversionTable[$groupRecord["bakalari_code"]] = $groupRecord["id"];
+		}
+        foreach ($data as $record)
+		{
+            if (isset($subjectConversionTable[$record->subject_code]) && isset($groupConversionTable[$record->group_code]) && isset($teacherConversionTable[$record->teacher_code]))
+            {
+                $this->loadsModel->dumbInsert(array(
+                    "sch_teacher_id" => $teacherConversionTable[$record->teacher_code],
+                    "sch_group_id" => $groupConversionTable[$record->group_code],
+					"sch_subject_id" => $subjectConversionTable[$record->subject_code],
+					"hours" => $record->hours,
+					"bakalari_code" => $record->bakalari_code
+                    ));              
+            }
+            else 
+            {
+                $reports[] = "ERROR: Nekonzistentní data [" . $record->subject_code . ", " . $record->group_code . ", " . $record->teacher_code . "]";
+            }
+		}  		     	
+        //$messages = array_merge($result->messages,$result2->messages);
 		$this->template->reports = $reports;
 		$this->template->messages = $messages;
 		$this->setView("result");

@@ -7,8 +7,10 @@ class Classes extends \App\Model\Common\GridTableModel
  	{
 		parent::__construct($connection, "sch_class");
 		$this->getSelection()->removeClause("SELECT");
-		$this->getSelection()->select("sch_class.*, user.firstname AS teacher_firstname, user.lastname AS teacher_lastname")
-			->leftJoin("user")->on("sch_class.teacher_id = user.id");
+		$this->getSelection()->select("sch_class.*, user.firstname AS teacher_firstname, user.lastname AS teacher_lastname, COUNT(*) as students")
+			->leftJoin("user")->on("sch_class.teacher_id = user.id")
+			->leftJoin("sch_student")->on("sch_class.id = sch_student.class_id")
+			->groupBy("sch_class.id");
 		$this->setPrimaryKey("sch_class.id");	
 	}
 	

@@ -8,7 +8,7 @@
 <div n:foreach="$messages as $message" class="alert alert-{$message->kind}">{$message->text}</div>
 </div>
 </section>
-{if $reports}
+{if isset($reports)}
 <section class="card normal-card">
 <div>
 <header>

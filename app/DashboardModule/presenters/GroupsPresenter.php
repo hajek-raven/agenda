@@ -314,7 +314,7 @@ class GroupsPresenter extends \App\Presenters\SecuredGridPresenter
 		     {
 			     $this->flashMessage("Při ukládání dat došlo k chybě.","danger");
 		     }
-             // finally 
+             //finally 
              {
                  $this->redirect("id",$id); 
              }

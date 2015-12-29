@@ -1,6 +1,5 @@
 {block content}
 <div class="data-cards">
-{dump $data}
 <section class="card normal-card">
 <div>
 <header>
@@ -8,36 +7,34 @@
 </header>
 <dl>
 	<dt>Celý název</dt>
-	<dd>{$data->name}</dd>
+	<dd>{if !empty($data->name)}{$data->name}{else}&mdash;{/if}</dd>
 	<dt>Zkratka</dt>
 	<dd>{$data->shortname}</dd>
-	<dt>Ročník</dt>
-	<dd>{$data->year}</dd>
-	<dt>Třídní učitel</dt>
-	<dd><a n:href="Teachers:id, $data->teacher_id">{$data->teacher_firstname} {$data->teacher_lastname}</a></dd>
+	<dt>Třída</dt>
+	<dd><a n:href="Classes:id,$data->sch_class_id">{$data->class}</a></dd>
 </dl>
 </div>
 </section>
 <section class="card normal-card">
 <div>
 <header>
-<h1>Studenti</h1>
+<h1>Členové</h1>
 </header>
-{control studentsGrid}
+{control membersGrid}
 </div>
 </section>
 <section class="card normal-card">
 <div>
 <header>
-<h1>Skupiny</h1>
+<h1>Úvazky</h1>
 </header>
-{control groupsGrid}
+{control loadsGrid}
 </div>
 </section>
 </div>
 {/block}
 {block menu}
 <nav>
-	<a class="list icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Seznam tříd">Seznam</a>
+	<a class="list icon-button" n:href="default" data-toggle="tooltip" data-placement="right" title="Seznam skupin">Seznam</a>
 </nav>
 {/block}

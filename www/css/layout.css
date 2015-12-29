@@ -69,7 +69,7 @@ body, #page {
 #obfuscator.visible {
 	display: block;
 }
-#drawer {
+.drawer {
 	position: absolute;
 	top:0;
 	right:-240px;
@@ -85,16 +85,19 @@ body, #page {
   flex-direction: column;
   padding: 0px;
 }
-#drawer nav {
-}
-#drawer header {
+.drawer > * {
 	padding: 10px;
+}
+.drawer > nav {
+	padding: 0;
+}
+.drawer header {
 	font-size: 16pt;
 }
-#drawer.opened {
+.drawer.opened {
 	transform: translateX(-240px);
 }
-#drawer nav a {
+.drawer nav a {
 	flex-shrink: 0;
 	padding: 16px 46px;
 	display: block;

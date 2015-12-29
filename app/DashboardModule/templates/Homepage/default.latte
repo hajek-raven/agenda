@@ -36,6 +36,28 @@
   </footer>
 </div>
 {/if}
+{if ($user->isAllowed("Dashboard:My",'default'))}
+<div class="card normal-card">
+ <a n:href="My:default">
+  <div class="big-icon user">&nbsp;</div>
+  </a>
+  <footer>
+  <div class="area-description">Osobní nastavení</div>
+  <div><a n:href="Files:default" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
+{if ($user->isInRole("administrator"))}
+<div class="card normal-card">
+ <a href="{$basePath}/adminer/?username=root&host=localhost">
+  <div class="big-icon database">&nbsp;</div>
+  </a>
+  <footer>
+  <div class="area-description">Databáze</div>
+  <div><a href="{$basePath}/adminer/?username=root&host=localhost" class="icon-button bordered right">Detail</a></div>
+  </footer>
+</div>
+{/if}
 </div>
 {/block}
 {block menu}

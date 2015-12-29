@@ -137,7 +137,7 @@ class SignPresenter extends \App\Presenters\BasePresenter
 		{
 			$this->flashMessage("Registrace uživatele se nepodařila.","danger");
 		}
-		finally
+		//finally
 		{
 			$this->redirect("verification",array("username" => $values->email));
 		}
@@ -205,7 +205,7 @@ class SignPresenter extends \App\Presenters\BasePresenter
 		{
 			$this->flashMessage("Při odesílání ověřovacího kódu došlo k neznámé chybě.","danger");
 		}
-		finally
+		//finally
 		{
 			$this->redirect("recovery",array("username" => $values->username));
 		}
@@ -238,7 +238,7 @@ class SignPresenter extends \App\Presenters\BasePresenter
 		{
 			$this->flashMessage("Při nastavování hesla došlo k chybě.","danger");
 		}
-		finally
+		//finally
 		{
 			$this->redirect("in");
 		}

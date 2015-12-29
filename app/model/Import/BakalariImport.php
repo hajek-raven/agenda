@@ -102,7 +102,7 @@ class BakalariImport extends \Nette\Object
 	
 	public function importMembership()
 	{
-		return $this->sendCommand("membership/dump/");
+		return $this->sendCommand("members/dump/");
 	}
 	
 	public function importLoads()

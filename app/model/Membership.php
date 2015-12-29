@@ -63,4 +63,22 @@ class Membership extends Common\GridTableModel
 		}
 		return $return;
 	}
+	
+	public function getIdfromRole($groupName)
+	{
+		$groupId = $this->query("SELECT id FROM `group` WHERE role_name = \"$groupName\"")->fetch();
+		if ($groupId)
+		{
+			return $groupId->id;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public function emptyGroup($group)
+	{
+		$this->query("DELETE FROM " . $this->getTableName() . " WHERE group_id = $group");
+	}
 }

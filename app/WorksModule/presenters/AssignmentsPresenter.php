@@ -172,7 +172,7 @@ class AssignmentsPresenter extends \App\Presenters\SecuredGridPresenter
 			{
 				$this->flashMessage("Při ukládání práce došlo k chybě.","danger");
 			}
-			finally
+			//finally
 			{
 				$this->redirect("id",$id);
 			}

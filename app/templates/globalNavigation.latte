@@ -1,10 +1,8 @@
-<div id="global-navigation">
-  <nav>
-    <header>Moduly</header>
+  <header>Moduly</header>
+  <nav>  
     <a n:href=":Front:Homepage:default" class="home">Titulní stránka</a>
     {if ($user->isAllowed("Dashboard:Homepage",'default'))}<a n:href=":Dashboard:Homepage:default" class="dashboard">Dashboard</a>{/if}
     {if ($user->isAllowed("Works:Homepage",'default'))}<a n:href=":Works:Homepage:default" class="graduate">Dlouhodobé práce</a>{/if}
     {if ($user->isAllowed("Activity:Homepage", 'default'))}<a n:href=":Activity:Homepage:default" class="act_default">Evidence činností</a>{/if}
     {if ($user->isAllowed("School:Homepage",'default'))}<a n:href=":School:Homepage:default" class="graduate">Školní data</a>{/if}
   </nav>
-</div>

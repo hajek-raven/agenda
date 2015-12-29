@@ -57,6 +57,7 @@ class Acl extends Permission
         $this->allow('teacher', array('Works:Ideas'), Permission::ALL);
         $this->allow('student', array('Works:Assignments'), array('default','application'));
         $this->allow('teacher', array('Works:Assignments'), array('default','add','id','edit','delete','print'));
+        $this->allow('teacher', array('School:Homepage','School:Teachers','School:Classes','School:Students','School:Subjects','School:Groups'), Permission::ALL);
         $this->allow('administrator',  Permission::ALL, Permission::ALL);
     }
 }

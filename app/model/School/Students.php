@@ -9,7 +9,7 @@ class Students extends \App\Model\Common\GridTableModel
 		$this->getSelection()->removeClause("SELECT");
 		$this->getSelection()->select("sch_student.*, user.firstname, user.lastname, user.title, user.title_after, user.email, user.phone, user.gender, sch_class.shortname AS class")
 			->join("user")->on("sch_student.user_id = user.id")
-			->join("sch_class")->on("sch_student.class_id = sch_class.id");
+			->leftJoin("sch_class")->on("sch_student.class_id = sch_class.id");
 		$this->setPrimaryKey("sch_student.user_id");	
 	}
 	

@@ -19,10 +19,15 @@
 		<header id="site-header">
 		<div class="container-vertical">
 			<div class="container-horizontal container-spread" id="site-heading">
-			<div id="site-title">{if isset($title)}{$title}{else}SPŠSE a VOŠ{/if}</div>
+			<div id="site-title">{if isset($title)}{$title}{else}Agenda SPŠSE a VOŠ v2{/if}</div>
 			<div class="icons">
-				<span id="drawer-trigger" class="icon-button menu" data-toggle="tooltip" data-placement="left" title="Rychlá navigace">Navigace</span>
-				{if $user->isLoggedIn()}<a n:href=":Service:Sign:out" class="sign-out icon-button" data-toggle="tooltip" data-placement="left" title="Odhlášení uživatele">Odhlášení</a>{else}<a n:href=":Service:Sign:in" class="sign-in icon-button" data-toggle="tooltip" data-placement="left" title="Přihlášení stávajících a registrace nových uživatelů">Přihlášení</a>{/if}
+				<span id="search-trigger" class="icon-button find" data-toggle="tooltip" data-placement="left" title="Vyhledávání">Vyhledávání</span>
+				<span id="drawer-trigger" class="icon-button navigation" data-toggle="tooltip" data-placement="left" title="Rychlá navigace">Navigace</span>
+				{if $user->isLoggedIn()}
+				<span id="my-trigger" class="icon-button user" data-toggle="tooltip" data-placement="left" title="{$user->getIdentity()->firstname} {$user->getIdentity()->lastname}">{$user->getIdentity()->firstname} {$user->getIdentity()->lastname}</span>
+				{else}
+				<a n:href=":Service:Sign:in" class="sign-in icon-button" data-toggle="tooltip" data-placement="left" title="Přihlášení stávajících a registrace nových uživatelů">Přihlášení</a>
+				{/if}
 			</div>
 			</div>
 				{ifset menu}
@@ -41,9 +46,18 @@
 			</div>
 		</div>
 		<div id="obfuscator"></div>
-		<div id="drawer">
+		<div class="drawer right-drawer" id="nav-drawer">
+			<header>Navigace</header>
+			<nav>
+				{if ($user->isAllowed("School:Subjects",'default'))}<a n:href="Subjects:default" class="file">Předměty</a>{/if}
+				{if ($user->isAllowed("School:Groups",'default'))}<a n:href="Groups:default" class="group">Skupiny</a>{/if}
+				{if ($user->isAllowed("School:Students",'default'))}<a n:href="Students:default" class="student">Studenti</a>{/if}
+				{if ($user->isAllowed("School:Classes",'default'))}<a n:href="Classes:default" class="class">Třídy</a>{/if}
+				{if ($user->isAllowed("School:Teachers",'default'))}<a n:href="Teachers:default" class="teacher">Učitelé</a>{/if}
+			</nav>
 			{include '../../templates/globalNavigation.latte'}
 		</div>
+		{include '../../templates/globalDrawers.latte'}
 		{block scripts}
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 		<script src="//nette.github.io/resources/js/netteForms.min.js"></script>

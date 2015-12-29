@@ -106,7 +106,7 @@ abstract class SecuredGridPresenter extends SecuredPresenter
 		{
 			$this->flashMessage($this->messages["addFailed"],"danger");
 		}
-		finally
+		//finally
 		{
 			$this->redirect("default");
 		}
@@ -125,7 +125,7 @@ abstract class SecuredGridPresenter extends SecuredPresenter
 		{
 			$this->flashMessage($this->messages["editFailed"],"danger");
 		}
-		finally
+		//finally
 		{
 			$this->redirect("default");
 		}

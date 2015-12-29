@@ -27,7 +27,7 @@
 {if ($user->isAllowed("School:Students",'default'))}
 <div class="card normal-card">
  <a n:href="Students:default">
-  <div class="big-icon user">&nbsp;</div>
+  <div class="big-icon student">&nbsp;</div>
   <div class="big-number">{$students->total}</div>
  </a>
   <footer>
@@ -39,7 +39,7 @@
 {if ($user->isAllowed("School:Classes",'default'))}
 <div class="card normal-card">
  <a n:href="Classes:default">
-  <div class="big-icon group">&nbsp;</div>
+  <div class="big-icon class">&nbsp;</div>
   <div class="big-number">{$classes->total}</div>
  </a>
   <footer>
@@ -51,7 +51,7 @@
 {if ($user->isAllowed("School:Teachers",'default'))}
 <div class="card normal-card">
  <a n:href="Teachers:default">
-  <div class="big-icon user">&nbsp;</div>
+  <div class="big-icon teacher">&nbsp;</div>
   <div class="big-number">{$teachers->total}</div>
  </a>
   <footer>

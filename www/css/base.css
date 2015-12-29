@@ -1,5 +1,5 @@
 /* -- Basic definitions -- */
-@import url(http://fonts.googleapis.com/css?family=Roboto:400italic,100,700italic,300,700,100italic,300italic,400);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400italic,100,700italic,300,700,100italic,300italic,400);
 html {
 	color: rgba(0,0,0, 0.87);
 	font-size: 1em;
@@ -86,15 +86,15 @@ form .error {
 #obfuscator {
 	background-color:rgba(0,0,0,0.7);
 }
-#drawer, #side-panel {
+.drawer, #side-panel {
 	border-right: 1px solid #e0e0e0;
 	background: #fafafa;
   color: #424242;
 }
-#drawer nav a {
+.drawer nav a {
 	color: #757575;
 }
-#drawer nav a:hover {
+.drawer nav a:hover {
 	background-color: #eee;
 }
 
@@ -141,9 +141,9 @@ div.big-icon {
 .icon-button:hover, .table .btn-mini:hover {background-color: #eee;}
 .sign-in, .btn-mini.grid-action-in {background-image: url("../images/icons/black/login.svg");}
 .sign-out, .btn-mini.grid-action-out {background-image: url("../images/icons/black/logout.svg");}
-.dashboard {background-image: url("../images/icons/black/gear.svg");}
+.dashboard, .settings {background-image: url("../images/icons/black/gear.svg");}
 .leave {background-image: url("../images/icons/black/off.svg");}
-.id, .table .btn-mini.grid-action-id {background-image: url("../images/icons/black/detail.svg");}
+.id, .table .btn-mini.grid-action-id, .find {background-image: url("../images/icons/black/detail.svg");}
 .edit, .table .btn-mini.grid-action-edit {background-image: url("../images/icons/black/edit.svg");}
 .delete, .table .btn-mini.grid-action-delete, .icon-button.remove, .table .btn-mini.grid-action-remove {background-image: url("../images/icons/black/trash.svg");}
 .members, .group, .table .btn-mini.grid-action-members {background-image: url("../images/icons/black/group.svg");}
@@ -165,9 +165,14 @@ div.big-icon {
 .left {background-image: url("../images/icons/black/left.svg");}
 .right {background-image: url("../images/icons/black/right.svg");}
 .idea {background-image: url("../images/icons/black/lightbulb.svg");}
-.list {background-image: url("../images/icons/black/cards.svg");}
+.list {background-image: url("../images/icons/black/list.svg");}
+.cards {background-image: url("../images/icons/black/cards.svg");}
 .up {background-image: url("../images/icons/black/up.svg");}
 .down {background-image: url("../images/icons/black/down.svg");}
+.teacher {background-image: url("../images/icons/black/teacher.svg");}
+.student {background-image: url("../images/icons/black/student.svg");}
+.class {background-image: url("../images/icons/black/class.svg");}
+.navigation {background-image: url("../images/icons/black/navigation.svg");}
 .clone, .table .btn-mini.grid-action-clone {background-image: url("../images/icons/black/split.svg");}
 .act_default {background-image: url("../images/icons/black/act_work.png");}
 /* Cards */
